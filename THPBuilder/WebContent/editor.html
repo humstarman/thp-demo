@@ -1,0 +1,765 @@
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=9" ><![endif]-->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>THPower Cloud</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="shortcut icon" href="static/icons/favicon.ico">
+	
+	<link rel="stylesheet" type="text/css" href="static/autohtml/css/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/grapheditor.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/editor_default.css">
+    <link rel="stylesheet" type="text/css" href="static/thpower/thpcloud.css">
+     
+    <!-- jQuery -->
+    <script type="text/javascript" src="static/jquery/jquery-3.2.1.js"></script>	
+       
+    <!-- Bootstrap, Bootstrap是目前最受欢迎的前端框架 -->	
+    <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet">   
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    
+    <!--  Awesomplete - 零依赖的简单自动完成插件 -->
+    <script src="static/jquery/awesomplete.js"></script>
+      
+    <!--  toastr 基于jQuery简单、漂亮的消息提示插件，使用简单、方便，可以根据设置的超时时间自动消失  -->  
+    <link rel="stylesheet" type="text/css" href="static/toastr/toastr.css">
+    <script src="static/toastr/toastr.min.js"></script>
+    
+    <!--  Underscore 是一个 JavaScript 工具库，它提供了一整套函数式编程的实用功能，但是没有扩展任何 JavaScript 内置对象  -->
+    <!--  Underscore 提供了100多个函数，包括常用的：map、filter、invoke  -->
+    <script src="static/jquery/underscore-min.js"></script>
+        
+	<!--daovoice : DaoVoice 开放 API，可以操作 DaoVoice 的用户和对话 -->
+	<!-- 
+	<script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/abcfe652.js","daovoice")</script>
+   	-->
+   	
+   	<!-- Bootstrap Tags Input is a jQuery plugin providing a Bootstrap user interface for managing tags. -->
+    <link rel="stylesheet" href="static/tagsinput/jquery.tagsinput.css">
+    
+    
+	<link href="static/autohtml/css/icomoon.css" rel="stylesheet">
+	
+	<!-- ruler -->
+	<link rel="stylesheet" href="static/ruler/ruler.min.css" />
+    
+    <script type="text/javascript" src="static/tagsinput/jquery.tagsinput.js"></script>   	
+    
+    <script type="text/javascript" src="static/kindeditor/kindeditor.js"></script>
+    
+    <!--  -->
+    <script type="text/javascript" src="static/treeview/jquery.treeview.js"></script>
+      
+    <script type="text/javascript" src="static/jscolor/jscolor.js"></script> 
+    
+    <script type="text/javascript" src="static/ckeditor/ckeditor.js"></script> 
+    
+	<script type="text/javascript" src="static/sanitizer/sanitizer.min.js"></script>
+	
+    <script type="text/javascript" src="static/jquery/spin.min.js"></script>    
+    <script type="text/javascript" src="static/jquery/jquery.dataTables.js"></script>    
+	<script type="text/javascript" src="static/jquery/math.min.js"></script>
+	<script type="text/javascript" src="static/jquery/jquery.form.js"></script>
+	<!-- 
+	<script type="text/javascript" src="static/jquery/highcharts-more.src.js"></script>
+	<script type="text/javascript" src="static/jquery/highstock_new.js"></script>
+	 -->
+	
+    
+    
+	<style>
+.fh5co-loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(static/images/loader.gif) center no-repeat #fff;
+}
+
+.loading-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background-color: #1A1A1A;
+}
+
+.loading {
+	position: absolute;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 6.250em;
+	height: 6.250em;
+	-webkit-animation: rotate 2.4s linear infinite;
+	-moz-animation: rotate 2.4s linear infinite;
+	-o-animation: rotate 2.4s linear infinite;
+	animation: rotate 2.4s linear infinite;
+}
+
+.loading .white {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: white;
+	opacity: 0;
+	-webkit-animation: flash 2.4s linear infinite;
+	-moz-animation: flash 2.4s linear infinite;
+	-o-animation: flash 2.4s linear infinite;
+	animation: flash 2.4s linear infinite;
+}
+
+.loading .dot {
+	position: absolute;
+	margin: auto;
+	width: 2.4em;
+	height: 2.4em;
+	border-radius: 100%;
+	-webkit-transition: all 1s ease;
+	-moz-transition: all 1s ease;
+	-o-transition: all 1s ease;
+	transition: all 1s ease;
+}
+
+.loading .dot:nth-child(2) {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	background: #FF4444;
+	-webkit-animation: dotsY 2.4s linear infinite;
+	-moz-animation: dotsY 2.4s linear infinite;
+	-o-animation: dotsY 2.4s linear infinite;
+	animation: dotsY 2.4s linear infinite;
+}
+
+.loading .dot:nth-child(3) {
+	left: 0;
+	right: 0;
+	top: 0;
+	background: #FFBB33;
+	-webkit-animation: dotsX 2.4s linear infinite;
+	-moz-animation: dotsX 2.4s linear infinite;
+	-o-animation: dotsX 2.4s linear infinite;
+	animation: dotsX 2.4s linear infinite;
+}
+
+.loading .dot:nth-child(4) {
+	top: 0;
+	bottom: 0;
+	right: 0;
+	background: #99CC00;
+	-webkit-animation: dotsY 2.4s linear infinite;
+	-moz-animation: dotsY 2.4s linear infinite;
+	-o-animation: dotsY 2.4s linear infinite;
+	animation: dotsY 2.4s linear infinite;
+}
+
+.loading .dot:nth-child(5) {
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: #33B5E5;
+	-webkit-animation: dotsX 2.4s linear infinite;
+	-moz-animation: dotsX 2.4s linear infinite;
+	-o-animation: dotsX 2.4s linear infinite;
+	animation: dotsX 2.4s linear infinite;
+}
+
+<!-- 动画 --> 
+@keyframes 
+rotate { 
+0% {
+	-webkit-transform: rotate(0);
+	-moz-transform: rotate(0);
+	-o-transform: rotate(0);
+	transform: rotate(0);
+}
+
+10% {
+width:6.250em;		
+height:6.250em;		
+}
+
+66%{
+width:2.4em;		
+height:2.4em;	
+}
+
+100%{
+-webkit-transform:rotate(360deg);		
+-moz-transform:rotate(360deg);
+-o-transform:rotate(360deg);		
+transform:rotate(360deg);		
+width:6.250em;		
+height:6.250em;		
+}
+}
+
+@keyframes dotsY { 
+66% {
+	opacity: .1;
+	width: 2.4em;
+}
+
+77%{
+opacity:1;			
+width:0;			
+}
+}
+
+@keyframes dotsX { 
+66% {
+	opacity: .1;
+	height: 2.4em;
+}
+
+77%{
+opacity:1;			
+height:0;		
+}
+}
+
+@keyframes flash { 
+33% {
+	opacity: 0;
+	border-radius: 0%;
+}
+
+55%{
+opacity:.6;			
+border-radius:100%;		
+}
+
+66%{
+opacity:0;	
+}
+}
+
+.loading-text {
+	position: absolute;
+	width: 100%;
+	margin: auto;
+	top: 10em;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 3em;
+	text-align: center;
+	font-size: 1.5em;
+	color: #fff;
+}
+
+.use-mock-table {
+	display: table;
+	width: 100%;
+	height: 40px;
+	font-size: 14px;
+	text-align: center;
+	vertical-align:middle;
+	padding: 0;
+    margin: 0;
+}
+button.auto_set_btn{
+    border:none;
+    width:45px;
+    height:34px;
+    background:transparent url('static/images/off.png') top right no-repeat;
+    background-size:auto 34px;
+    padding:0;
+    margin-top:-2px;
+}
+button.auto_set_btn.btn_off{
+    background-image:url('static/images/off.png');
+}
+button.auto_set_btn.btn_on{
+    background-image:url('static/images/on.png');
+    background-position:top left;
+}
+button.btn_plus{
+    border:none;
+    width:16px;
+    height:16px;
+    background:transparent url('static/images/navigate_plus.png') top right no-repeat;
+    padding:0;
+    margin-top:3px;
+}
+button.btn_minus{
+    border:none;
+    width:16px;
+    height:16px;
+    background:transparent url('static/images/navigate_minus.png') top right no-repeat;
+    padding:0;
+    margin-top:3px;
+}
+button.btn_dataIds_link{
+    border:none;
+    width:38px;
+    height:22px;
+    background:transparent url('static/images/link.png') top right no-repeat;
+    padding:0;
+}
+.dtbar{
+    position: relative;
+    width: 300px;
+    border: 1px solid #000;
+    padding: 1px;
+    height: 30px;
+}
+.img_show{
+    width: 200px;
+    height: 150px;
+}
+.img_show:hover{
+	border:2px solid blue;
+}
+.img_checked{
+	border:3px solid red;
+}
+.table_div{
+	display:table;
+	overflow:hidden;
+	white-space:nowrap;
+	width:240px;
+	height:30px;
+}
+.table_div .show-line{display:block;height:20px;line-height:20px;}
+.table_div .show-box{position:fixed;height:60px;overflow:auto;background:white;display:none;}
+.borderul{width:100px;list-style:none;border:1px solid #666;padding:0 4px 0;margin-top:2px;}
+.borderul ul{padding:0;margin:0}
+.borderul li:hover{background:#3299FF}
+.borderul li:hover span{border-color:#fff;}
+.borderul li{display:block;width:100%;height:20px;line-height:20px;}
+.borderul span{display:block;width:100%;height:10px;line-height:10px;}
+.borderul .solid{border-bottom:1px solid #666;}
+.borderul .dotted{border-bottom:1px dotted #666;}
+.borderul .double{border-bottom:1px double #666;}
+.borderul .dashed{border-bottom:1px dashed #666;}
+.borderul .bold{border-bottom:3px solid #666;}
+</style>
+
+
+	<script type="text/javascript">
+	
+		var MAIN = {
+            'joinNode': 4,
+            'strokeWidth': 2,
+
+            'curCmpId': 0, //当前元件的id
+            // 'curCmpPage':1, // 当前元件面板的页码
+            // 'totalCmpPage':81,
+
+            // 'curModPage':1, //当前模块面板的页码
+            // 'totalModPage':1
+        };
+		
+       function GetQueryString(name) {
+            var str = window.location.href; //取得整个地址栏
+            var num = str.indexOf("?")
+            str = str.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
+
+            var arr = str.split("&"); //各个参数放到数组里
+            for (var i = 0; i < arr.length; i++) {
+                num = arr[i].indexOf("=");
+                if (num > 0) {
+                    if (name === arr[i].substring(0, num)) {
+                        return decodeURIComponent(arr[i].substr(num + 1));
+                    }
+                }
+            }
+            return "";
+        }
+	   
+        var simuId = 987;
+        var simuName = "";        
+        var mid = -1;
+
+
+        var websocketURI = 'ws://www.thpowercom/ws/';
+        var websocketheart = "--heartbeat--";
+        var userFolder = [{"folder": "默认文件夹", "id": 1124}];
+        var wizardMenus=["-"];
+        
+ 
+        
+        function configureStylesheet(graph) {
+            style = new Object();
+            style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_IMAGE;
+            //style[mxConstants.STYLE_FONTCOLOR] = '#774400';
+            style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
+            style[mxConstants.STYLE_PERIMETER_SPACING] = '12';
+            style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_LEFT;
+            style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
+            style[mxConstants.STYLE_FONTSIZE] = '12';
+            //style[mxConstants.STYLE_FONTSTYLE] = 2;
+            style[mxConstants.STYLE_IMAGE_WIDTH] = '6';
+            style[mxConstants.STYLE_IMAGE_HEIGHT] = '6';
+            //~ style[mxConstants.STYLE_STROKECOLOR] = '#FFA500';
+            graph.getStylesheet().putCellStyle('port', style);
+        };
+
+        var editorName = null;
+        var loginResult = null;        
+        
+        $.get(
+       		"/THPBuilder/login_status", 
+      		{}, 
+       		function(result) {
+	            if (result.is_login) {
+	                editorName = result.username;
+	                loginResult = result;
+	                
+	                //daovoice init
+	                /*
+	                daovoice('init', {
+	                    app_id: "abcfe652",
+	                    user_id: result.id,   // 必填: 该用户在您系统上的唯一ID
+	                    email: result.email,   // 选填:  该用户在您系统上的主邮箱
+	                    name: result.username, // 选填: 用户名
+	                    signed_up: result.signuptime, // 选填: 用户的注册时间，用Unix时间戳表示
+	                    secure_digest:result.secure_digest//app secure_digest
+	                });		                                
+	                daovoice('update');
+	                */
+	            }
+            }, 
+            'json'
+        );
+	
+		// Public global variables
+	    var MAX_REQUEST_SIZE = 10485760;
+	    var MAX_WIDTH = 6000;
+	    var MAX_HEIGHT = 6000;
+	
+	    // URLs for save and export
+	    var EXPORT_URL = '/export';
+	    var SAVE_URL = '/save';
+	    var OPEN_URL = '/open';
+	    var RESOURCES_PATH = 'static/resources';
+	    var RESOURCE_BASE = RESOURCES_PATH + '/grapheditor';
+	    var STENCIL_PATH = 'static/stencils';
+	    var IMAGE_PATH = 'static/images';
+	    var STYLE_PATH = 'static/editor';
+	    var CSS_PATH = 'static/styles';
+	    var OPEN_FORM = 'open.html';
+	
+	    // Specifies connection mode for touch devices (at least one should be true)
+	    var tapAndHoldStartsConnection = true;
+	    var showConnectorImg = true;
+	
+	    // Parses URL parameters. Supported parameters are:
+	    // - lang=xy: Specifies the language of the user interface.
+	    // - touch=1: Enables a touch-style user interface.
+	    // - storage=local: Enables HTML5 local storage.
+	    var urlParams = (function (url) {
+	        var result = new Object();
+	        var idx = url.lastIndexOf('?');
+	
+	        if (idx > 0) {
+	            var params = url.substring(idx + 1).split('&');
+	
+	            for (var i = 0; i < params.length; i++) {
+	                idx = params[i].indexOf('=');
+	
+	                if (idx > 0) {
+	                    result[params[i].substring(0, idx)] = params[i].substring(idx + 1);
+	                }
+	            }
+	        }
+	
+	        return result;
+	    })(window.location.href);
+	
+	    // Sets the base path, the UI language via URL param and configures the
+	    // supported languages to avoid 404s. The loading of all core language
+	    // resources is disabled as all required resources are in grapheditor.
+	    // properties. Note that in this example the loading of two resource
+	    // files (the special bundle and the default bundle) is disabled to
+	    // save a GET request. This requires that all resources be present in
+	    // each properties file since only one file is loaded.
+	    mxLoadResources = false;
+	    mxBasePath = 'static/mxgraph';
+	    
+	    //mxLanguage = urlParams['lang'];
+	    mxLanguage = "zh";
+	    mxLanguages = ['zh','en'];
+    
+	</script>
+
+	
+    <script type="text/javascript" src="static/js/Init.js"></script>
+    
+	<script type="text/javascript" src="static/mxgraph/js/mxClient.js"></script>	
+   
+	<script type="text/javascript" src="static/js/EditorUi.js"></script>
+	<script type="text/javascript" src="static/js/Editor.js"></script>		
+	<script type="text/javascript" src="static/js/Sidebar.js"></script>
+	<script type="text/javascript" src="static/js/Graph.js"></script>
+	<script type="text/javascript" src="static/js/Shapes.js"></script>
+	<script type="text/javascript" src="static/js/Actions.js"></script>
+	<script type="text/javascript" src="static/js/Menus.js"></script>
+	<script type="text/javascript" src="static/js/Format.js"></script>
+	<script type="text/javascript" src="static/js/Toolbar.js"></script>
+	<script type="text/javascript" src="static/js/Dialogs.js"></script>	
+	<script type="text/javascript" src="static/js/Label.js"></script>
+	<script type="text/javascript" src="static/js/AppRoot.js"></script>
+    <script type="text/javascript" src="static/js/shareDL.js"></script>
+    <script type="text/javascript" src="static/js/Time.js"></script>
+    <script type="text/javascript" src="static/js/GModel.js"></script>
+    
+	<script type="text/javascript" src="static/thpower/window-info.js"></script>
+	<script type="text/javascript" src="static/thpower/utils.js"></script>
+	
+    <script type="text/javascript" src="static/thpower/window-chart-websql.js"></script>
+    <script type="text/javascript" src="static/thpower/main-setting.js"></script>
+    
+    <script type="text/javascript" src="static/thpower/main-editor.js"></script>
+    
+	<script type="text/javascript" src="static/thpower/THPCloud.js"></script>
+	
+	<script type="text/javascript" src="static/thpower/load-simu.js"></script>	
+	<script type="text/javascript" src="static/thpower/VersionHistory.js"></script>	
+	
+	<script type="text/javascript" src="static/js/echarts.js"></script>	
+	<!--
+	<script type="text/javascript" src="public/js/sourceCode/app/app.js"></script>
+	<script type="text/javascript" src="public/js/sourceCode/app/md5.js"></script> 	
+	-->	
+	<script type="text/javascript" src="static/ruler/ruler.min.js"></script>
+	
+</head>
+<body class="geEditor">
+<!--
+<form id="upload" enctype="multipart/form-data" method="post"> 
+ <input type="file" name="file" id="pic"/> 
+ <input type="button" value="提交" onclick="uploadPic();"/> 
+ <span class="showUrl"></span> 
+ <img src="" class="showPic" alt=""> 
+</form> 
+-->
+	<div class="loading-mask" id="loading_mask">
+		<div id="loading" class="loading">
+		    <div class="dot white"></div>
+		    <div class="dot"></div>
+		    <div class="dot"></div>
+		    <div class="dot"></div>
+		    <div class="dot"></div>
+		</div>
+		<div class="loading-text">载入中...</div>
+	</div>
+	
+	<div id="container" style="overflow:hidden;"></div>
+	
+	<script type="text/javascript">
+		
+		//added by wuguanhui
+		var editorUi = "";
+	
+		// Extends EditorUi to update I/O action states based on availability of backend
+		(function()
+		{	
+			Editor.useLocalStorage = true;
+		
+			var editorUiInit = EditorUi.prototype.init;
+
+			EditorUi.prototype.init = function()
+			{				
+				editorUiInit.apply(this, arguments);
+				this.actions.get('export').setEnabled(false);
+
+				// Updates action states which require a backend
+				if (!Editor.useLocalStorage)
+				{					
+					mxUtils.post(OPEN_URL, '', mxUtils.bind(this, function(req)
+					{
+						var enabled = req.getStatus() != 404;
+						
+						this.actions.get('open').setEnabled(enabled || Graph.fileSupport);
+						this.actions.get('import').setEnabled(enabled || Graph.fileSupport);
+						this.actions.get('save').setEnabled(enabled);
+						this.actions.get('saveAs').setEnabled(enabled);
+						this.actions.get('export').setEnabled(enabled);
+						
+					}));
+				}
+			};
+
+			// Adds required resources (disables loading of fallback properties, this can only
+			// be used if we know that all keys are defined in the language specific file)
+			mxResources.loadDefaultBundle = false;
+			var bundle = mxResources.getDefaultBundle(RESOURCE_BASE, mxLanguage) ||
+				mxResources.getSpecialBundle(RESOURCE_BASE, mxLanguage);
+            function getGraphXml(graph,ignoreSelection)
+            {
+            	var node = null;
+            	
+            	if (ignoreSelection)
+            	{
+            		var enc = new mxCodec(mxUtils.createXmlDocument());
+            		node = enc.encode(graph.getModel());
+            	}
+            	else
+            	{
+            		node = graph.encodeCells(mxUtils.sortCells(this.graph.model.getTopmostCells(
+            			this.graph.getSelectionCells())));
+            	}
+
+            	if (graph.view.translate.x != 0 || graph.view.translate.y != 0)
+            	{
+            		node.setAttribute('dx', Math.round(graph.view.translate.x * 100) / 100);
+            		node.setAttribute('dy', Math.round(graph.view.translate.y * 100) / 100);
+            	}
+            	
+            	node.setAttribute('grid', (graph.isGridEnabled()) ? '1' : '0');
+            	node.setAttribute('gridSize', graph.gridSize);
+            	node.setAttribute('guides', (graph.graphHandler.guidesEnabled) ? '1' : '0');
+            	node.setAttribute('tooltips', (graph.tooltipHandler.isEnabled()) ? '1' : '0');
+            	node.setAttribute('connect', (graph.connectionHandler.isEnabled()) ? '1' : '0');
+            	node.setAttribute('arrows', (graph.connectionArrowsEnabled) ? '1' : '0');
+            	node.setAttribute('fold', (graph.foldingEnabled) ? '1' : '0');
+            	node.setAttribute('page', (graph.pageVisible) ? '1' : '0');
+            	node.setAttribute('pageScale', graph.pageScale);
+            	node.setAttribute('pageWidth', graph.pageFormat.width);
+            	node.setAttribute('pageHeight', graph.pageFormat.height);
+
+            	if (graph.background != null)
+            	{
+            		node.setAttribute('background', graph.background);
+            	}
+            	
+            	return node;
+            }
+			
+			// Fixes possible asynchronous requests
+			mxUtils.getAll([bundle, STYLE_PATH + '/default.xml'], function(xhr)
+			{
+				// Adds bundle text to resources
+				mxResources.parse(xhr[0].getText());
+				
+				// Configures the default graph theme
+				var themes = new Object();
+				themes[Graph.prototype.defaultThemeName] = xhr[1].getDocumentElement(); 
+				
+				// Main
+				editor=new Editor(urlParams['chrome'] == '0', themes);
+				editorUi = 	new EditorUi(editor);
+				
+			 	//editorUi.editor.graph.zoomTo(screen.width / 1920);
+                //editorUi.editor.graph.center();
+                
+                /*
+				
+								
+				_xj_mxgraph = map.getModel();
+				*/
+                
+				//simuId=0;
+				mid=10;
+                if (simuId > 0) {
+                	
+                	loadProject(simuId, editorUi);
+                    
+                } else if (mid > 0) {
+
+                } else {
+                	
+                    editorUi.loadAppFile();
+                    
+                    //recover modified status
+                    editorUi.editor.modified = false;                    
+                }
+                
+                editorUi.loadReference();
+                
+                /* ruler plugin */
+                //'#wrapper'
+                var rul1 = new ruler({container: document.querySelector('.geDiagramContainer')});
+                
+                $("#browser").treeview({
+                    animated: "fast",
+                    collapsed: false
+                });
+                
+                function removeloading(){
+                    $('#loading').removeClass('loading');
+                    $('#loading_mask').fadeOut();
+                }
+                
+                setTimeout(removeloading,1);
+				
+			}, function()
+			{
+				document.body.innerHTML = '<center style="margin-top:10%;">Error loading resource files. Please check browser console.</center>';
+			});	
+		})();
+		//图片上传
+        function uploadPic() {
+            var form = document.getElementById('upload'),
+                formData = new FormData(form);
+            var pic=$('#pic').val();
+            if(pic && pic!=''){
+                $.ajax({
+                	//https://sscpre.boe.com/v1/medical-console/medical/file/upload
+                    url: "/THPBuilder/uploadPic",
+                    type: "post",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                    	var obj=JSON.parse(res);
+                        if (obj.success=='1') {
+                            alert("上传成功！");
+                            $('#img_updata_dialog_picurl').html(obj.url);
+                            showPic(obj.url);
+                        }
+                    },
+                    error: function (err) {
+                        alert("网络连接失败,稍后重试", err);
+                    }
+                })
+            }else{
+            	alert("请选择需要上传的图片");
+            }
+        }
+        function showPic(upUrl){
+            $.ajax({
+                type : 'POST',
+                url : "getPics",
+                //contentType: 'application/json',
+                data : {},
+                dataType : 'json',
+                async : true,
+                success : function(data, textStatus) {
+//                    console.log(data);
+                    $('#img_show_pics').empty();
+                    var s = '';
+                    for (var i = 0; i < data.length; i++){
+                    	if(upUrl==data[i].picUrl){
+                    		s += '<img class="img_show img_checked" src="' + data[i].picUrl + '" onclick="picChecked(this)"/>';
+                    	}else{
+                        	s += '<img class="img_show" src="' + data[i].picUrl + '" onclick="picChecked(this)"/>';
+                    	}
+                    }
+                    $('#img_show_pics').append(s);
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("请求失败，无法获取分组数据");
+                }
+            });
+		}
+        function picChecked(element) {
+        	$(element).addClass("img_checked").siblings().removeClass("img_checked");
+			$('#img_updata_dialog_picurl').html($(element).attr("src"));
+        }  
+        
+	</script>
+	
+</body>
+</html>

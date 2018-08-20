@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thpower.scada.mapper.THPFileMapper">
+
+	<select id="getFiles" resultType="THPFile">
+		select * from sys_files;
+	</select>
+
+	<update id="updateFileContent" parameterType="THPFile">
+		update sys_files set fileContent=#{fileContent} where fileId=#{fileId};
+	</update>
+	
+	
+	<select id="select" parameterType="long" resultType="THPFile">
+		select * from
+		sys_files where fileId = #{fileId};
+	</select>
+
+	<insert id="insert" parameterType="THPFile" useGeneratedKeys="true" keyProperty="fileId" >
+		insert into sys_files (fileId,fileName, fileContent)
+		values (#{fileId},#{fileName}, #{fileContent});
+	</insert>
+
+	<update id="update" parameterType="THPFile">
+		update sys_files set fileName=#{fileName},fileContent=#{fileContent} where fileId=#{fileId};
+	</update>
+		
+	<delete  id="delete" parameterType="long">
+		delete from sys_files where
+		fileId = #{fileId};
+	</delete >
+
+</mapper>

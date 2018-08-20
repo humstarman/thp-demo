@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>THPower Cloud</title>
+    <link rel="shortcut icon" href="static/icons/favicon.ico">
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="main/vstyles/style.css" type="text/css"/>
+    <link href="main/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="main/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="static/styles/GModel.css">
+
+    <!--<link rel="stylesheet" href="static/bootstrap/css/bootstrap-datetimepicker.css">-->
+    
+    <script type="text/javascript" src="static/jquery/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="main/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="static/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="main/js/viewpage.js"></script>
+    <script type="text/javascript" src="main/numeral/numeral.min.js"></script>
+    <script type="text/javascript">
+        var urlParams = (function (url) {
+            var result = new Object();
+            var idx = url.lastIndexOf('?');
+
+            if (idx > 0) {
+                var params = url.substring(idx + 1).split('&');
+
+                for (var i = 0; i < params.length; i++) {
+                    idx = params[i].indexOf('=');
+
+                    if (idx > 0) {
+                        result[params[i].substring(0, idx)] = params[i].substring(idx + 1);
+                    }
+                }
+            }
+
+            return result;
+        })(window.location.href);
+
+
+        var RESOURCES_PATH = 'static/resources';
+        var STENCIL_PATH = 'static/stencils';
+        var IMAGE_PATH = 'static/images';
+        var STYLE_PATH = 'static/editor';
+        var CSS_PATH = 'static/styles';
+
+        mxBasePath = 'static/mxgraph';
+        //xmlBaseContent='<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/><GObject gobjType="GDataTag" label="123v" phyType="电压" valueFormat="00.00" bShowPhy="0" bShowUnit="0" measId="4000" bShowTime="0" id="4"><DataMultiStatus as="multiStatus"><TextDrawStyle textColor="#CCC" bBLink="0" as="deNormalSatus"/><DataDrawingDef lower="40" upper="50" as="normalStatus"><TextDrawStyle textColor="#ddd" bBLink="0" as="drawStyle"/></DataDrawingDef></DataMultiStatus><mxCell style="shape=label;fillColor=none;strokeColor=none" vertex="1" parent="1"><mxGeometry x="120" y="20" width="80" height="30" as="geometry"/></mxCell></GObject><GObject gobjType="GChartGauge" dataSrc="localhost:8080" dataIds="4000" title="仪表盘" nowTime="*" id="9"><Object as="options"><Object formatter="{a} &lt;br/&gt;{b} : {c}%" as="tooltip"/><Array as="series"><Object name="仪表盘" min="0" max="100" splitNumber="10" type="gauge"><Object formatter="{value}%" as="detail"/><Array as="data"><Object value="35" name="测点1"/></Array></Object></Array></Object><mxCell style="overflow=fill;fillColor=#ffffff;fontColor=#000000;" vertex="1" parent="1"><mxGeometry x="20" y="100" width="280" height="300" as="geometry"/></mxCell></GObject></root></mxGraphModel>';
+        xmlBaseContent = '<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/><GObject gobjType="GChartTrend" dataSrc="localhost:8080" title="趋势图" startTime="*-1 Hour" endTime="*" background="#FFF" id="9"><Array as="dataIds"><add value="4000"/><add value="3995"/><add value="3990"/><add value="3980"/></Array><Object as="options"><Object text="趋势图" as="title"/><Object trigger="axis" as="tooltip"/><Object bottom="80" as="grid"/><Object type="category" boundaryGap="0" as="xAxis"><Object show="1" as="splitLine"/><Object showMinLabel="1" showMaxLabel="1" as="axisLabel"/></Object><Object type="value" as="yAxis"/><Array as="dataZoom"><Object type="inside" start="0" end="100"/><Object start="0" end="100" handleIcon="M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z" handleSize="80%"><Object color="#fff" shadowBlur="3" shadowColor="rgba(0, 0, 0, 0.6)" shadowOffsetX="2" shadowOffsetY="2" as="handleStyle"/></Object></Array><Array as="series"><Object name="线路1" type="line" showSymbol="0" hoverAnimation="0"><Array as="data"><Array><add value="2018-5-11 08:24:01"/><add value="-"/></Array><Array><add value=""/><add value="-"/></Array></Array></Object><Object name="线路2" type="line" showSymbol="0" hoverAnimation="0"><Array as="data"><Array><add value="2009/10/13 0:00"/><add value="0"/></Array><Array><add value="2009/10/13 1:00"/><add value="2"/></Array><Array><add value="2009/10/13 2:00"/><add value="4"/></Array><Array><add value="2009/10/13 3:00"/><add value="6"/></Array><Array><add value="2009/10/13 4:00"/><add value="8"/></Array></Array></Object></Array></Object><Array as="pieColor"><add value=""/><add value=""/><add value=""/></Array><mxCell parent="1" style="overflow=fill;fillColor=#ffffff;fontColor=#000000;" vertex="1"><mxGeometry x="10" y="10" width="900" height="500" as="geometry"/></mxCell></GObject></root></mxGraphModel>';
+
+        var projectData;
+
+    </script>
+
+    <!-- Loads and initializes the library -->
+    <script type="text/javascript" src="static/mxgraph/js/mxClient.js"></script>
+    <script type="text/javascript" src="static/thpower/main-editor.js"></script>
+    <script type="text/javascript" src="static/sanitizer/sanitizer.min.js"></script>
+    <script type="text/javascript" src="static/js/Graph.js"></script>
+    <script type="text/javascript" src="static/js/Shapes.js"></script>
+    <script type="text/javascript" src="static/js/echarts.js"></script>
+    <script type="text/javascript" src="static/js/Time.js"></script>
+    <script type="text/javascript" src="static/app/option.js"></script>
+
+    <script type="text/javascript" src="static/js/GModel.js"></script>
+    <script type="text/javascript" src="static/js/GEvent.js"></script>
+    <script type="text/javascript" src="main/js/viewer.js"></script>
+    <script type="text/javascript" src="main/js/charts.js"></script>
+    <script type="text/javascript" src="main/js/toolbar.js"></script>
+    <script type="text/javascript" src="static/js/CreateTable.js"></script>
+    <script type="text/javascript" src="static/js/Viewchart.js"></script>
+    <style>
+        /* button带图标  */
+        /**************************************************************/
+        .btn-wrap {
+            margin-left: 15px;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        .btn-wrap button {
+            display: inline-block;
+            width: 68px;
+            height: 28px;
+            line-height: 28px;
+            background: rgba(240, 240, 240, 0.45);
+            border: 1px solid #d7d7d7;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #0a0a0a;
+            cursor: pointer;
+            /*padding: 0 0 0 20px;*/
+            padding: 0 0 0 0px;
+            margin: 5px;
+        }
+
+        .btn-wrap button.add {
+            background: url(../images/add.png) no-repeat 8px rgba(240, 240, 240, 0.45);
+            padding-left: 20px;
+        }
+
+        .btn-wrap button.search {
+            background: url(../images/search.png) no-repeat 8px rgba(240, 240, 240, 0.45);
+            padding-left: 20px;
+        }
+
+        /* 搜索筛选样式 */
+        .sl-v-list_input {
+            overflow: hidden;
+            zoom: 1;
+            padding-top: 10px;
+            margin: 0 30px;
+        }
+
+        .sl-v-list_input .div_block {
+            display: block;
+            float: left;
+        }
+
+        .sl-v-list_input .div_block span {
+            text-align: right;
+            float: left;
+            margin-top: 3px;
+        }
+
+        .sl-v-list_input .div_block_margin {
+            margin-left: 10px;
+        }
+
+        /* dropdwon 样式*/
+        .select_dropdwon {
+            height: 30px;
+            border: 1px solid #e6e6e6;
+            width: 100px;
+        }
+
+        /*jeitem*/
+        .icons {
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAASAgMAAAA1aVZ3AAAACVBMVEUAAAD///9nyrNdI4MmAAAAAXRSTlMAQObYZgAAAChJREFUCNdjWAUCCxjg9DQgtTKBAUN8aigQJGCho6KiYDSJ8ggaYR8Ao74zAKjm+cYAAAAASUVORK5CYII=");
+            background-repeat: no-repeat;
+        }
+
+        .jequote {
+            max-width: 1140px;
+            margin-bottom: 10px;
+            padding: 15px;
+            line-height: 22px;
+            border: 4px solid #00A080;
+            border-radius: 4px;
+            background-color: #f5f5f5;
+            font-size: 15px;
+        }
+
+        .jebody {
+            max-width: 1140px;
+            margin: 40px auto;
+            position: relative;
+        }
+
+        .jewarp {
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .jewarp h3 {
+            position: relative;
+            left: 0;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 10px;
+            white-space: nowrap;
+            border-radius: 4px 4px 0 0;
+            font-size: 16px;
+            color: #00A080;
+            text-align: left;
+        }
+
+        .jewarp .content {
+            border: 1px solid #ededed;
+            border-radius: 0 0 4px 4px;
+            padding: 20px 10px 10px 10px;
+            overflow: hidden;
+        }
+
+        .jeitem {
+            margin: 0 10px 8px 0;
+            position: relative;
+            float: left;
+        }
+
+        .jelabel {
+            /*width: 130px;*/
+            float: left;
+            display: block;
+            padding: 4px 2px;
+            font-weight: 400;
+            text-align: right;
+            color: #555;
+        }
+
+        .jeinpbox {
+            float: left;
+            /*width: 190px;*/
+            /*margin-right: 10px;*/
+            display: inline-block;
+            vertical-align: middle;
+            position: relative;
+        }
+
+        .jeinput {
+            display: block;
+            width: 100%;
+            padding-left: 10px;
+            height: 30px;
+            line-height: 30px \9;
+            border: 1px solid #e6e6e6;
+            background-color: #fff;
+            border-radius: 3px;
+        }
+
+        .jebtns {
+            width: 35px;
+            margin-left: 10px;
+            height: 36px;
+            line-height: 36px \9;
+            border: 1px solid #e6e6e6;
+            background-color: #fff;
+            border-radius: 3px;
+            background-position: right center;
+            float: left;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+<body style="background:url(main/images/topbg.png) repeat-x;">
+<div class="header">
+    <div class="topleft">
+        <a href="javascript:void(0)" target="_parent"><img src="main/images/syslogo.png" title="智慧能源实时监控系统"/></a>
+    </div>
+    <div id="daohang" class="daohang">
+        <!--
+        <div class="dropdown">
+             <select id="first" onchange="setSecond(this)">
+                  <option value="en">en</option>
+                  <option value="zh">zh</option>
+              </select>
+        </div>
+         -->
+        <!--
+        <ul id="projecttabs" class="nav">
+
+            <li  class="selected"><a id="menu01" onclick="tabshow(menu01);">项目地图 </a><i class="fa fa-remove tab-close" onclick="tabclose();"></i></li>
+            <li><a id="menu02" onclick="tabshow(menu02);">项目分析</a><i class="fa fa-remove tab-close" onclick="tabclose();"></i></li>
+            <li><a id="menu03" onclick="tabshow(menu03);">总体介绍</a><i class="fa fa-remove tab-close" onclick="tabclose();"></i></li>
+            <li><a id="menu04" onclick="tabshow(menu04);">项目介绍</a><i class="fa fa-remove tab-close" onclick="tabclose();"></i></li>
+
+        </ul>
+        -->
+    </div>
+    <div class="topright" style="padding-top:20px; margin-right: 20px;">
+        <div id="showDate" style="display:block; float:left; color: #fff;width: 240px;"></div>
+        <a href="main.html" style="display:block; float:left; color: #fff;width: 50px;">退 出</a>
+    </div>
+</div>
+<div class="mainer">
+    <div id="mov" class="sidebar" style="background:#f0f9fd;">
+        <div class="lefttop">
+            <span id="projectname" style="margin-left:10px; font-size:14px;">功能列表</span>
+        </div>
+        <dl class="leftmenu">
+            <dd>
+                <!-- 手风琴折叠 -->
+                <ul id="accordion" class="accordion">
+                    <li>
+                        <div class="link">实时监控<i class="fa fa-chevron-down"></i></div>
+                        <ul class="menuson">
+                            <div id="kuang" class="kuang">
+                                <ul id="projectviews" class="nav2" style=" background-color:#ffffff">
+                                    <!--
+                                    <li style="border-bottom:1px solid #dbe9f1;"><cite1></cite1><a>xxx</a></li>
+                                    <li style="border-bottom:1px solid #dbe9f1;"><cite1></cite1><a>yyy</a></li>
+                                    -->
+                                </ul>
+                            </div>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="link">数据查询<i class="fa fa-chevron-down"></i></div>
+                        <ul class="menuson">
+                            <div id="guang" class="kuang">
+                                <ul id="trendviews" class="nav2" style=" background-color:#ffffff">
+                                    <!--
+                                      <li style="border-bottom:1px solid #dbe9f1;"><cite1 style="background:url(main/images/icon008.png) no-repeat"></cite1><a title="实时数据"  href="javascript:void(0);" onclick="ItemClick(-1);" >实时数据</a><i></i>
+                                      </li>
+                                       -->
+                                </ul>
+                            </div>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="link">报表查询<i class="fa fa-chevron-down"></i></div>
+                        <ul class="menuson">
+                            <div id="guang" class="kuang">
+                                <ul id="reportviews" class="nav2" style=" background-color:#ffffff">
+                                    <!--
+                                      <li style="border-bottom:1px solid #dbe9f1;"><cite1 style="background:url(main/images/icon008.png) no-repeat"></cite1><a title="实时数据"  href="javascript:void(0);" onclick="ItemClick(-1);" >实时数据</a><i></i>
+                                      </li>
+                                       -->
+                                </ul>
+                            </div>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="link">报表查询<i class="fa fa-chevron-down"></i></div>
+                        <ul class="menuson">
+                            <div id="guang" class="kuang">
+                                <ul id="alarmviews" class="nav2" style=" background-color:#ffffff">
+                                    <!--
+                                      <li style="border-bottom:1px solid #dbe9f1;"><cite1 style="background:url(main/images/icon008.png) no-repeat"></cite1><a title="实时数据"  href="javascript:void(0);" onclick="ItemClick(-1);" >实时数据</a><i></i>
+                                      </li>
+                                       -->
+                                </ul>
+                            </div>
+                        </ul>
+                    </li>
+                </ul>
+
+            </dd>
+        </dl>
+    </div>
+    
+    <!-- Creates a container for the graph with a grid wallpaper -->
+    <div id="graphContainer" class="graphContainer" style="cursor:default;">
+    </div>
+	<iframe id="webContainer" ></iframe>
+
+    <div style="position: absolute;display:none;" id="div_toolbar">
+        <!--工具栏 -->
+        <div class="btn-wrap" style="border: 1px solid #ddd;">
+            <button type="button" class="btn btn-lg save" id="btn_restore">
+                还原
+            </button>
+            <!--<button type="button" class="btn  btn-lg cancel" >-->
+            <!--当前-->
+            <!--</button>-->
+            <button type="button" class="btn btn-lg exprot" style="width: 100px;" id="btn_option" data-toggle="modal"
+                    data-target="#optionModal">
+                更改范围
+            </button>
+            <button type="button" class="btn btn-lg refresh play" id="btn_PlayTimer">
+                播放
+            </button>
+            <!--<button type="button" class="btn btn-lg refresh next"  >-->
+            <!--快进-->
+            <!--</button>-->
+            <!--<button type="button" class="btn btn-lg refresh pre" >-->
+            <!--后退-->
+            <!--</button>-->
+            <!--<button type="button" class="btn btn-lg refresh" >-->
+            <!--选项-->
+            <!--</button>-->
+        </div>
+    </div>
+</div>
+
+<!--更改设置模态框（Modal）-->
+<div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" style="width: 680px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">选项</h4>
+            </div>
+            <div class="modal-body">
+
+                <div>
+                    <!--区域-->
+                    <div class="sub_nav">
+                        <ul class="sub_nav_title">
+                            <li class="sub_nav_title_item">
+                                <span class="sub_nav_title_item_span"></span>
+                                <a href="javascript:;">时间范围</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <!--<div class="sl-v-list_input" >-->
+                        <!--<div class="div_block">-->
+                        <!--<span>显示范围：</span>-->
+                        <!--<select class="select_dropdwon" >-->
+                        <!--<option value="1"></option>-->
+                        <!--<option value="2"></option>-->
+                        <!--</select>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <div class="sl-v-list_input">
+                            <div class="div_block">
+                                <div class="jeitem">
+                                    <label class="jelabel">开始时间：</label>
+                                    <div class="jeinpbox"><input type="text" class="jeinput" id="date_start"
+                                                                 placeholder="YYYY-MM-DD hh:mm:ss"></div>
+                                </div>
+                            </div>
+                            <div class="div_block div_block_margin">
+                                <div class="jeitem">
+                                    <label class="jelabel">结束时间：</label>
+                                    <div class="jeinpbox"><input type="text" class="jeinput" id="date_end"
+                                                                 placeholder="YYYY-MM-DD hh:mm:ss"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--区域-->
+                    <div class="sub_nav">
+                        <ul class="sub_nav_title">
+                            <li class="sub_nav_title_item">
+                                <span class="sub_nav_title_item_span"></span>
+                                <a href="javascript:;">刷新</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="sl-v-list_input">
+                            <div class="div_block">
+                                <span>刷新频率：</span>
+                                <input type="text" width="50px" placeholder="1" value="1"
+                                       style="height: 28px;border: 1px solid #ddd;" id="txt_frequency"/>
+                            </div>
+                            <div class="div_block div_block_margin">
+                                <select class="select_dropdwon" id="dropdwon_frequency">
+                                    <option value="1">分钟</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="sl-v-list_input">
+                            <div class="div_block">
+                                <span>刷新速度：</span>
+                                <input type="text" width="50px" placeholder="60" value="60"
+                                       style="height: 28px;border: 1px solid #ddd;" id="txt_interval"/>
+                            </div>
+                            <div class="div_block div_block_margin">
+                                <select class="select_dropdwon" id="dropdwon_interval">
+                                    <option value="1">分钟</option>
+                                    <option value="2">秒</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="btn_ok">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script type="text/javascript">
+    $(function () {
+        //顶部导航切换
+        $(".nav li a").click(function () {
+            $(".nav li.selected").removeClass("selected")
+            $(this).addClass("selected");
+        })
+
+        //左部导航切换
+        $(".menuson li").click(function () {
+            $(".menuson li.active").removeClass("active")
+            $(this).addClass("active");
+        });
+
+
+        //载入项目列表
+        //for  test -----
+        /*
+         $.each(trends_view_data, function(i, item){
+         var item_html='<li style="border-bottom:1px solid #dbe9f1;" onclick="TestClick('+i+');changeColor(this);">'
+         +'<cite1 style="background:url(main/images/icon008.png) no-repeat"/>'
+         + '<a title="' + item.appName + '"  href="javascript:void(0);">'
+         +  item.appName + '</a><i></i></li>';
+
+         $("ul#trendviews").append(item_html);
+
+         //var tab_html = '<li><a onclick="tabshow(this);">'+item.name+' </a>'
+         //+'<i class="fa fa-remove tab-close" onclick="tabclose();"></i></li>';
+         //$("ul#projecttabs").append(tab_html);
+
+         });
+         */
+         
+         //report 
+         
+         $.each(report_view_data, function(i, item){
+	         var item_html='<li style="border-bottom:1px solid #dbe9f1;" onclick="HTMLClick('+i+');changeColor(this);">'
+	         +'<cite1 style="background:url(main/images/icon008.png) no-repeat"/>'
+	         + '<a title="' + item.viewName + '"  href="javascript:void(0);">'
+	         +  item.viewName + '</a><i></i></li>';
+	
+	         $("ul#reportviews").append(item_html);
+         });
+
+        //$("#kuang").height($(window).height() - 400); //初始化宽度、高度
+        $(window).resize(function () {
+
+            //调整宽度
+            //var winWidth = document.body.scrollWidth - 220;      // 取窗口宽度
+            //if (winWidth <= 0) winWidth = 600;   // 初始高度并不总能取出，设默认值
+
+            //var myDiv = document.getElementById('graphContainer');   //  div
+            //myDiv.style.width = winWidth + 'px';        // 设置宽度
+
+            $("#graphContainer").height($(window).height() - 60);
+            $("#graphContainer").width($(window).width() - 230);
+        });
+
+        loadProject();
+
+        //$("#graphContainer").height($(window).height() - 60);
+        //$("#graphContainer").width($(window).width() - 230);
+
+        /////////////////////////////////////////////////////////////
+        var Accordion = function (el, multiple) {
+            this.el = el || {};
+            this.multiple = multiple || false;
+
+            // Variables privadas
+            var links = this.el.find('.link');
+            // Evento
+            links.on('click', {el: this.el, multiple: this.multiple}, this.dropdown)
+        }
+
+        Accordion.prototype.dropdown = function (e) {
+            var $el = e.data.el;
+            $this = $(this),
+                $next = $this.next();
+
+            $next.slideToggle();
+            $this.parent().toggleClass('open');
+
+            if (!e.data.multiple) {
+                $el.find('.submenu').not($next).slideUp().parent().removeClass('open');
+            }
+            ;
+        }
+
+        var accordion = new Accordion($('#accordion'), false);
+
+        ////////////////////////////////////////////////////////////////
+
+        ////画面定时刷新
+        //setInterval("refresh();",5000); //每隔5秒运行一次
+        ////时间定时刷新
+        //setInterval("getTime();",5000); //每隔5秒运行一次
+
+        refresh();
+        getTime();
+    })
+
+
+    function GetQueryString(name) {
+        var str = window.location.href; //取得整个地址栏
+        var num = str.indexOf("?")
+        str = str.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
+
+        var arr = str.split("&"); //各个参数放到数组里
+        for (var i = 0; i < arr.length; i++) {
+            num = arr[i].indexOf("=");
+            if (num > 0) {
+                if (name === arr[i].substring(0, num)) {
+                    return decodeURIComponent(arr[i].substr(num + 1));
+                }
+            }
+        }
+        return "";
+    }
+
+
+    function getTime() {
+        var dtCurrent = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var year = dtCurrent.getFullYear();
+        var month = dtCurrent.getMonth() + 1;
+        var day = dtCurrent.getDate();
+        var hour = dtCurrent.getHours();
+        var minute = dtCurrent.getMinutes();
+        var second = dtCurrent.getSeconds();
+
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (day >= 0 && day <= 9) {
+            day = "0" + day;
+        }
+        if (hour >= 0 && hour <= 9) {
+            hour = "0" + hour;
+        }
+        if (minute >= 0 && minute <= 9) {
+            minute = "0" + minute;
+        }
+        if (second >= 0 && second <= 9) {
+            second = "0" + second;
+        }
+
+        var currentdate = year + seperator1 + month + seperator1 + day
+            + " " + hour + seperator2 + minute + seperator2 + second;
+
+        $("#showDate").html("当前时间： " + currentdate); //将值赋给div
+    }
+
+
+    function tabshow(index) {
+        //$(".nav li a.selected").removeClass("selected");
+        console.log("show");
+
+    }
+
+    function tabclose(index) {
+        //$(".nav li a.selected").removeClass("selected");
+        console.log("close");
+
+    }
+
+    function loadProject() {
+
+        //localStorage
+        var jsonProject = localStorage.getItem("thpcloud.projects");
+        var objProject = JSON.parse(jsonProject);
+
+        simuId = GetQueryString("proid");
+        simuName = GetQueryString("proname");
+
+        if (objProject.total <= 0) {
+
+        } else {
+            if (simuId == "") {
+                simuId = objProject.data[0].id;
+            }
+
+            for (var x = 0; x < objProject.total; x++) {
+                if (simuId == objProject.data[x].id) {
+                    simuId = objProject.data[x].id;
+                    simuName = objProject.data[x].name;
+                }
+            }
+
+            $.get(
+                '/THPBuilder/loadProject',
+                {proid: simuId},
+                function (response, status, jxhr) {
+                    if (status == "success") {
+                        projectData = response.diagram.project;
+
+                        //如果没数据，调用模拟数据
+                        if (projectData == null || projectData == '') {
+                            projectData = menu_data;
+                        }
+
+                        $.each(projectData, function (i, item) {
+
+
+                            var item_html = '';
+                            if (i == 0) {
+                                item_html = '<li class="selectedCss" style="border-bottom:1px solid #dbe9f1;" onclick="ItemClick(' + i + ');changeColor(this);">'
+                                    + '<cite1 style="background:url(main/images/icon008.png) no-repeat"/>'
+                                    + '<a title="' + item.appName + '"  href="javascript:void(0);">'
+                                    + item.appName + '</a><i></i></li>';
+
+                            } else {
+                                item_html = '<li style="border-bottom:1px solid #dbe9f1;" onclick="ItemClick(' + i + ');changeColor(this);">'
+                                    + '<cite1 style="background:url(main/images/icon008.png) no-repeat"/>'
+                                    + '<a title="' + item.appName + '"  href="javascript:void(0);">'
+                                    + item.appName + '</a><i></i></li>';
+
+                            }
+
+                            $("ul#projectviews").append(item_html);
+
+                        });
+
+                        ItemClick(0);
+
+                    } else {
+                        alert("load project error!");
+                    }
+                },
+                'json'
+            );
+        }
+
+    }
+
+    function ItemClick(index) {
+        if (index == null || index < 0 || index > projectData.length)
+            return;
+
+        
+        //调整宽度
+        var winWidth = document.body.scrollWidth - 220;      // 取窗口宽度
+        if (winWidth <= 0) winWidth = 600;   // 初始高度并不总能取出，设默认值
+
+        var myDiv = document.getElementById('graphContainer');   //  div
+        myDiv.style.width = winWidth + 'px';        // 设置宽度
+
+        $("#graphContainer").show();        
+        $("#webContainer").hide();
+
+        //xmlBaseContent = menu_data[index].contents;
+        xmlBaseContent = projectData[index].appRoot;
+
+        main(document.getElementById('graphContainer'));
+
+    }
+
+    function TestClick(index) {
+        if (index == null || index < 0 || index > menu_data.length)
+            return;
+
+        xmlBaseContent = menu_data[index].appRoot;
+
+        main(document.getElementById('graphContainer'));
+    }
+        
+    function HTMLClick(index) {
+        if (index == null || index < 0 || index > report_view_data.length)
+            return;
+        
+        url = report_view_data[index].viewUrl;
+
+        $("#graphContainer").hide();        
+        $("#webContainer").show();        
+
+        var winWidth = document.body.clientWidth - 220;      // 取窗口宽度
+        if (winWidth <= 600) winWidth = 600;   // 初始高度并不总能取出，设默认值
+        
+        var winHeight = document.body.clientHeight;
+        if (winHeight <= 600) winHeight = 600;   // 初始高度并不总能取出，设默认值
+
+        var myDiv = document.getElementById('webContainer');   //  div
+        myDiv.style.width = winWidth + 'px';        // 设置宽度
+        myDiv.style.height = winHeight + 'px';      // 设置高度
+        
+        $("#webContainer").attr("src", url);
+        
+        //xmlBaseContent = menu_data[index].appRoot;
+
+        //main(document.getElementById('graphContainer'));
+    }
+
+    function changeColor(obj) {
+        //改变所有li样式，寻找id为jquery_genr的ul元素的所有li元素
+        $(".nav2 >li").removeClass();
+        //.addClass("normalCss");
+
+        //改变当前li样式
+        //$(obj).parent().addClass("selectedCss");
+        $(obj).addClass("selectedCss");
+    }
+
+
+    /*右键点击弹出框 */
+//    var menu = document.getElementById("div_toolbar");
+//    document.oncontextmenu = function (e) {
+//        var e = e || window.event;
+//        //鼠标点的坐标
+//        var oX = e.clientX;
+//        var oY = e.clientY;
+//        //菜单出现后的位置
+//        menu.style.display = "block";
+//        menu.style.left = oX + "px";
+//        menu.style.top = oY + "px";
+//        //阻止浏览器默认事件
+//        return false;
+//    }
+//    document.onclick = function (e) {
+//        var e = e || window.event;
+//        menu.style.display = "none"
+//    }
+//    menu.onclick = function (e) {
+//        var e = e || window.event;
+//        e.cancelBubble = true;
+//    }
+
+/*
+Javascript:
+
+网页可见区域宽： document.body.clientWidth
+网页可见区域高： document.body.clientHeight
+网页可见区域宽： document.body.offsetWidth (包括边线的宽)
+网页可见区域高： document.body.offsetHeight (包括边线的高)
+网页正文全文宽： document.body.scrollWidth
+网页正文全文高： document.body.scrollHeight
+网页被卷去的高： document.body.scrollTop
+网页被卷去的左： document.body.scrollLeft
+网页正文部分上： window.screenTop
+网页正文部分左： window.screenLeft
+屏幕分辨率的高： window.screen.height
+屏幕分辨率的宽： window.screen.width
+屏幕可用工作区高度： window.screen.availHeight
+屏幕可用工作区宽度： window.screen.availWidth
+
+*/
+</script>
+
+</body>
+</html>

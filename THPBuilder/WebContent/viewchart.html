@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="main/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap-datetimepicker.css">
+    <link href="main/mstyles/view.css" rel="stylesheet">
+
+    <script type="text/javascript" src="static/jquery/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="main/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="static/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript">
+        var urlParams = (function (url) {
+            var result = new Object();
+            var idx = url.lastIndexOf('?');
+
+            if (idx > 0) {
+                var params = url.substring(idx + 1).split('&');
+
+                for (var i = 0; i < params.length; i++) {
+                    idx = params[i].indexOf('=');
+
+                    if (idx > 0) {
+                        result[params[i].substring(0, idx)] = params[i].substring(idx + 1);
+                    }
+                }
+            }
+
+            return result;
+        })(window.location.href);
+
+
+        var RESOURCES_PATH = 'static/resources';
+        var STENCIL_PATH = 'static/stencils';
+        var IMAGE_PATH = 'static/images';
+        var STYLE_PATH = 'static/editor';
+        var CSS_PATH = 'static/styles';
+
+        mxBasePath = 'static/mxgraph';
+        //xmlBaseContent='<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/><GObject gobjType="GDataTag" label="123v" phyType="电压" valueFormat="00.00" bShowPhy="0" bShowUnit="0" measId="4000" bShowTime="0" id="4"><DataMultiStatus as="multiStatus"><TextDrawStyle textColor="#CCC" bBLink="0" as="deNormalSatus"/><DataDrawingDef lower="40" upper="50" as="normalStatus"><TextDrawStyle textColor="#ddd" bBLink="0" as="drawStyle"/></DataDrawingDef></DataMultiStatus><mxCell style="shape=label;fillColor=none;strokeColor=none" vertex="1" parent="1"><mxGeometry x="120" y="20" width="80" height="30" as="geometry"/></mxCell></GObject><GObject gobjType="GChartGauge" dataSrc="localhost:8080" dataIds="4000" title="仪表盘" nowTime="*" id="9"><Object as="options"><Object formatter="{a} &lt;br/&gt;{b} : {c}%" as="tooltip"/><Array as="series"><Object name="仪表盘" min="0" max="100" splitNumber="10" type="gauge"><Object formatter="{value}%" as="detail"/><Array as="data"><Object value="35" name="测点1"/></Array></Object></Array></Object><mxCell style="overflow=fill;fillColor=#ffffff;fontColor=#000000;" vertex="1" parent="1"><mxGeometry x="20" y="100" width="280" height="300" as="geometry"/></mxCell></GObject></root></mxGraphModel>';
+        xmlBaseContent = '<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/><GObject gobjType="GChartTrend" dataSrc="localhost:8080" title="趋势图" startTime="*-1 Hour" endTime="*" background="#FFF" id="9"><Array as="dataIds"><add value="4000"/><add value="3995"/><add value="3990"/><add value="3980"/></Array><Object as="options"><Object text="趋势图" as="title"/><Object trigger="axis" as="tooltip"/><Object bottom="80" as="grid"/><Object type="category" boundaryGap="0" as="xAxis"><Object show="1" as="splitLine"/><Object showMinLabel="1" showMaxLabel="1" as="axisLabel"/></Object><Object type="value" as="yAxis"/><Array as="dataZoom"><Object type="inside" start="0" end="100"/><Object start="0" end="100" handleIcon="M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z" handleSize="80%"><Object color="#fff" shadowBlur="3" shadowColor="rgba(0, 0, 0, 0.6)" shadowOffsetX="2" shadowOffsetY="2" as="handleStyle"/></Object></Array><Array as="series"><Object name="线路1" type="line" showSymbol="0" hoverAnimation="0"><Array as="data"><Array><add value="2018-5-11 08:24:01"/><add value="-"/></Array><Array><add value=""/><add value="-"/></Array></Array></Object><Object name="线路2" type="line" showSymbol="0" hoverAnimation="0"><Array as="data"><Array><add value="2009/10/13 0:00"/><add value="0"/></Array><Array><add value="2009/10/13 1:00"/><add value="2"/></Array><Array><add value="2009/10/13 2:00"/><add value="4"/></Array><Array><add value="2009/10/13 3:00"/><add value="6"/></Array><Array><add value="2009/10/13 4:00"/><add value="8"/></Array></Array></Object></Array></Object><Array as="pieColor"><add value=""/><add value=""/><add value=""/></Array><mxCell parent="1" style="overflow=fill;fillColor=#ffffff;fontColor=#000000;" vertex="1"><mxGeometry x="10" y="10" width="900" height="500" as="geometry"/></mxCell></GObject></root></mxGraphModel>';
+
+    </script>
+
+
+    <!--<script type="text/javascript" src="main/js/viewpage.js"></script>-->
+    <script type="text/javascript" src="main/numeral/numeral.min.js"></script>
+    <script type="text/javascript" src="static/mxgraph/js/mxClient.js"></script>
+    <!--<script type="text/javascript" src="static/thpower/main-editor.js"></script>-->
+    <!--<script type="text/javascript" src="static/sanitizer/sanitizer.min.js"></script>-->
+
+    <script type="text/javascript" src="static/js/echarts.js"></script>
+    <script type="text/javascript" src="static/js/Time.js"></script>
+    <script type="text/javascript" src="static/app/option.js"></script>
+    <script type="text/javascript" src="main/js/charts.js"></script>
+    <script type="text/javascript" src="static/js/Viewchart.js"></script>
+    <script type="text/javascript" src="main/js/viewcharts.js"></script>
+</head>
+<body>
+<div>
+    <!--标题-->
+    <!--<div>-->
+    <!--<h3>数据曲线</h3>-->
+    <!--</div> class="nav nav-tabs"  -->
+    <div class="sub_nav">
+        <ul id="myTab" class="left left_sub_nav" >
+            <li class="sec_nav_item active" id="mytab1">
+                <a href="#tab1" data-toggle="tab">
+                    数据曲线
+                </a>
+            </li>
+            <li class="sec_nav_item" id="mytab2"><a href="#tab2" data-toggle="tab">数据表格</a></li>
+        </ul>
+    </div>
+
+    <!--tab页-->
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="tab1">
+            <!--查询条件-->
+            <div>
+                <!--时间搜索-->
+                <div class="sl-v-list_input">
+                    <div class="jeitem">
+                        <label class="jelabel">开始时间：</label>
+                        <input size="16" type="text"  id="date_start" value="2012-06-15 14:45" readonly class="form_datetime" style="padding-left: 10px; height: 30px;line-height: 30px;border: 1px solid #e6e6e6;background-color: #fff;border-radius: 3px;">
+                    </div>
+                    <div class="jeitem">
+                        <label class="jelabel">结束时间：</label>
+                        <input size="16" type="text"  id="date_end" value="2012-06-15 14:45" readonly class="form_datetime" style="padding-left: 10px; height: 30px;line-height: 30px;border: 1px solid #e6e6e6;background-color: #fff;border-radius: 3px;">
+                    </div>
+
+                    <button type="button" class="btn btn-primary" style="margin-left: 5px;" id="selected" >搜索</button>
+                    <!--<div style="position: relative;float: left;" class="query-btn ue-clear">-->
+                        <!--<a href="javascript:;" class="confirm1" style="width:80px; border-radius:3px;" id="selected">搜索</a>-->
+                    <!--</div>-->
+
+                </div>
+                <!--测点选择-->
+                <div class="sl-v-list_input">
+                    <span style="float: left;">按数据对比：</span>
+                    <div id="allpoints" class="left">
+                        <ul class="ul_nav" id="ul_allpoints">
+                        </ul>
+
+                    </div>
+                    <!--工具栏-->
+                    <!--<div  class="btn-wrap right">-->
+                        <!--<button type="button" class="btn btn-lg save" >-->
+                            <!--还原-->
+                        <!--</button>-->
+                        <!--<button type="button" class="btn  btn-lg cancel" >-->
+                            <!--当前-->
+                        <!--</button>-->
+                        <!--<button type="button" class="btn btn-lg exprot" style="width: 100px;" >-->
+                            <!--更改范围-->
+                        <!--</button>-->
+                        <!--<button type="button" class="btn btn-lg del" >-->
+                            <!--同步-->
+                        <!--</button>-->
+                        <!--<button type="button" class="btn btn-lg del" >-->
+                            <!--重复-->
+                        <!--</button>-->
+                        <!--<button type="button" class="btn btn-lg refresh play"  >-->
+                            <!--停止-->
+                        <!--</button>-->
+                        <!--<button type="button" class="btn btn-lg refresh next"  >-->
+                            <!--快进-->
+                        <!--</button>-->
+                        <!--<button type="button" class="btn btn-lg refresh pre" >-->
+                            <!--后退-->
+                        <!--</button>-->
+                        <!--<button type="button" class="btn btn-lg refresh" >-->
+                            <!--选项-->
+                        <!--</button>-->
+
+                        <!--&lt;!&ndash;<div class="div_toolbar">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="tab_tool" style="margin-left: 3px;margin-top: 3px;" data-toggle="tooltip"&ndash;&gt;-->
+                        <!--&lt;!&ndash;data-placement="bottom" title="还原">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/restore.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/restore.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="tab_tool" style="margin-top: 3px;" data-toggle="tooltip" data-placement="bottom"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="后退">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/backward.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/backward.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;&lt;!&ndash;<span style="width:300px;height:25px;margin-top: 2px;float: left;"></span>&ndash;&gt;&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="tab_tool" style="margin-top: 3px;" data-toggle="tooltip" data-placement="bottom"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="前移">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/forward.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/forward.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="tab_tool" style="margin-top: 3px;" data-toggle="tooltip" data-placement="bottom"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="转到当前时间">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/currenttime.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/currenttime.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="tab_tool" style="margin-top: 3px;" data-toggle="tooltip" data-placement="bottom"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="更改显示范围">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/timesetting.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/timesetting.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="tab_tool" style="margin-top: 3px;" data-toggle="tooltip" data-placement="bottom"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="同步">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/synchronous.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/synchronous.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="tab_tool" style="margin-top: 3px;" data-toggle="tooltip" data-placement="bottom"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="重复">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/repeat.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/repeat.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="tab_tool" style="margin-top: 3px;" data-toggle="tooltip" data-placement="bottom"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="停止">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/stop.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/stop.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="tab_tool" style="margin-top: 3px;" id="play" data-toggle="tooltip"&ndash;&gt;-->
+                        <!--&lt;!&ndash;data-placement="bottom" title="播放">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/play.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/play.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="tab_tool" style="margin-top: 3px;" data-toggle="tooltip" data-placement="bottom"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="快进">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/fastforward.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/fastforward.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="tab_tool" style="margin-top: 3px;" data-toggle="tooltip" data-placement="bottom"&ndash;&gt;-->
+                        <!--&lt;!&ndash;title="选项">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/setup.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<img src="/images/setup.png"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
+                </div>
+                <!--曲线-->
+                <div id="mychart1" class="chart-content" style="padding-top: 40px;width:100%;float: left;">
+                </div>
+            </div>
+        </div>
+            <div class="tab-pane fade" id="tab2">
+                <!--查询条件-->
+                <div>
+                    <!--时间搜索-->
+                    <div class="sl-v-list_input">
+                        <div class="jeitem">
+                            <label class="jelabel">开始时间：</label>
+                            <input size="16" type="text"  id="date_start1" value="2012-06-15 14:45" readonly class="form_datetime" style="padding-left: 10px; height: 30px;line-height: 30px;border: 1px solid #e6e6e6;background-color: #fff;border-radius: 3px;">
+                        </div>
+                        <div class="jeitem">
+                            <label class="jelabel">结束时间：</label>
+                            <input size="16" type="text"  id="date_end1" value="2012-06-15 14:45" readonly class="form_datetime" style="padding-left: 10px; height: 30px;line-height: 30px;border: 1px solid #e6e6e6;background-color: #fff;border-radius: 3px;">
+                        </div>
+                        <span  class="left" style="margin-top: 3px;">时刻长度：</span>
+                        <input class="left" style="margin-top: 3px;" type="text" value=""
+                               placeholder="1">
+                        <select style="margin-top: 3px;margin-left: 5px; height: 28px;" class="select_dropdwon left">
+                            <option value="3">毫秒</option>
+                            <option value="3">分钟</option>
+                            <option value="2">小时</option>
+                            <option value="1">秒数</option>
+                        </select>
+
+
+                        <div style="position: relative;float: left;" class="query-btn ue-clear">
+                            <a href="javascript:;" class="confirm1" style="width:80px; border-radius:3px;" id="btn_selectedtable">搜索</a>
+                        </div>
+
+                    </div>
+                </div>
+                <!--表格-->
+                <div id="div_points" class="pointmag">
+                    <div class="panel-content">
+                        <div class="panel-title"><span class="title-icon"></span><span class="propertyName"></span>
+                        </div>
+                        <div class="chart-content">
+                            <table id="tablePoints">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>测点名称</th>
+                                    <th>时间</th>
+                                    <th>数值</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                            <div>
+                                <!--<div>共400条记录 第1/80页</div>-->
+                                <ul class="pagination pagination-sm right" id="pageGro">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+</div>
+</body>
+</html>

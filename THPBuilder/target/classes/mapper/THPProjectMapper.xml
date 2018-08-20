@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thpower.scada.mapper.THPProjectMapper">
+
+	<select id="getProjectsByUserId" parameterType="long" resultType="THPProject">
+		select * from sys_projects where proUserId = #{proUserId} order by proCreateTime desc;
+	</select>
+	
+	<select id="getProjectById" parameterType="long" resultType="THPProject">
+		select * from sys_projects where proId = #{proId};
+	</select>
+
+	<update id="updateContent" parameterType="THPProject">
+		update sys_projects set proName=#{proName},  proDescription=#{proDescription}, proModifyTime=#{proModifyTime} where proId=#{proId};
+	</update>
+		
+	<select id="select" parameterType="long" resultType="THPProject">
+		select * from sys_projects where proId = #{proId};
+	</select>
+
+	<insert id="insert" parameterType="THPProject" useGeneratedKeys="true" keyProperty="proId" >
+		insert into sys_projects (proUserId, proName, proDescription, proType, proShared, proPath, proNote, proCreateTime, proModifyTime) 
+		values (#{proUserId}, #{proName}, #{proDescription}, #{proType}, #{proShared}, #{proPath}, #{proNote}, #{proCreateTime}, #{proModifyTime});
+	</insert>
+
+	<update id="update" parameterType="THPProject">
+		update sys_projects set proUserId=#{proUserId}, proName=#{proName}, proDescription=#{proDescription},
+		proType=#{proType},  proShared=#{proShared},	proPath=#{proPath}, proNote=#{proNote}, proCreateTime=#{proCreateTime}, proModifyTime=#{proModifyTime} 
+		where proId=#{proId};
+	</update>
+		
+	<delete  id="delete" parameterType="long">
+		delete from sys_projects where 	proId = #{proId};
+	</delete >
+
+</mapper>

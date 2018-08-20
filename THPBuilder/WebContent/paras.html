@@ -1,0 +1,285 @@
+<!DOCTYPE>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>THPower Scada</title>
+<link href="static/easyui/themes/default/easyui.css" rel="stylesheet" />
+<link href="static/easyui/themes/icon.css" rel="stylesheet" />
+
+<script type="text/javascript" src="static/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="static/easyui/jquery.easyui.min.js"></script>
+
+<script type="text/javascript">
+
+	// 对Date的扩展，将 Date 转化为指定格式的String  
+	// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，   
+	// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)   
+	Date.prototype.Format = function (fmt) { //author: meizz   
+	    var o = {  
+	        "M+": this.getMonth() + 1, //月份   
+	        "d+": this.getDate(), //日   
+	        "H+": this.getHours(), //小时   
+	        "m+": this.getMinutes(), //分   
+	        "s+": this.getSeconds(), //秒   
+	        "q+": Math.floor((this.getMonth() + 3) / 3), //季度   
+	        "S": this.getMilliseconds() //毫秒   
+	    };  
+	   if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));  
+	    for (var k in o)  
+		   if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));  
+	    return fmt;  
+	}  
+
+	//html打开时执行查询参数类别的信息
+	$(function() {
+		
+		//类别信息
+		$.ajax({
+			type : 'POST',
+			url : 'getTypes',
+			contentType: "application/x-www-form-urlencoded; charset=utf-8", 
+			//contentType : 'application/json',
+			//data : {},
+			dataType : 'json',
+			async : true,
+			success : function(data, textStatus) {	
+				
+				//console.log(data);	
+
+				//$('#showtypes').find("option").remove();//删除之前的数据
+				$("#showtypes").empty();
+				
+                var s = '';
+                for (var i = 0; i < data.length; i++)
+               	{
+                	if(data[i] === "ALL")
+                	{
+                   		s += '<option value=' + data[i] + ' selected="selected">' + data[i] + '</option>';
+                		
+                	}else
+               		{
+                   		s += '<option value=' + data[i] + '>' + data[i] + '</option>';               		
+               		}
+                }
+                
+                $('#showtypes').append(s);
+                
+                //自动查询
+                query();
+				
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log("请求失败，无法获取分组数据");
+			}
+		});
+		
+		//datagrid 初始化
+		$('#paraGrid').datagrid({
+		    height: 450,
+		    //url: 'url',
+		    method: 'POST',
+		    //queryParams: { 'paraid': paraid },
+		    idField: 'paraid',
+		    striped: true,
+		    fitColumns: true,
+		    singleSelect: true,
+		    rownumbers: false,
+		    pagination: true,
+		    nowrap: false,
+		    pageSize: 10,
+		    pageList: [10, 20, 50, 100, 150, 200],
+		    showFooter: true,
+		    columns: [[
+		        //{ field: 'ck', checkbox: true },
+		        { field: 'paraId', title: '标记', width: 50, align: 'center',  },
+		        { field: 'paraCode', title: '编码', width: 100, align: 'center' },
+		        { field: 'paraName', title: '名称', width: 100, align: 'center' },
+		        { field: 'paraType', title: '类别', width: 80, align: 'center' },
+		        { field: 'paraIndex', title: '序号', width: 50, align: 'center' },
+		        { field: 'paraDescription', title: '描述', width: 150, align: 'center' },
+		        { field: 'paraValue', title: '参数值', width: 150, align: 'center' },
+		        { field: 'paraIsValid', title: '有效性', width: 80, align: 'center' },
+		        { field: 'paraNote', title: '备注', width: 50, align: 'center' }
+		    ]],
+		    onBeforeLoad: function (param) {
+		    },
+		    onLoadSuccess: function (data) {		        
+		    },
+		    onLoadError: function () {		        
+		    },
+		    onClickCell: function (rowIndex, field, value) {		        
+		    }
+		});
+	})
+	
+	//查询按钮
+	function query() {
+		var paratype = $('#showtypes').val();
+		
+		//if(paratype ==="ALL") paratype="";			
+		//console.log(paratype);
+		
+		$.ajax({
+			type : 'POST',
+			url : 'getParas',
+			//contentType : 'application/json',
+			data : {'paratype' : paratype},
+			dataType : 'json',
+			async : true,
+			success : function(data, textStatus) {					
+				//console.log(data);			
+				
+				$("#paraGrid").datagrid("loadData", data.rows);  //动态取数据
+				
+			},
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				console.log("请求失败，无法获取分组数据");
+			}
+		});
+	}
+	
+	//new para
+	function newPara()
+	{
+		$('#dlg').dialog('open').dialog('setTitle', '新增参数');
+		$('#fm').form('clear');	
+		
+		url = "insertPara";
+	}
+	
+	//edit para
+	function editPara()
+	{
+		var row = $('#paraGrid').datagrid('getSelected');
+		if (row){
+			$('#dlg').dialog('open').dialog('setTitle','编辑参数');
+			$('#fm').form('load', row);
+			url = 'updatePara?paraId='+row.paraId;
+		}else
+		{
+			$.messager.show({
+				title: '提示',
+				msg: "请选中参数行！"
+			});
+		}
+	}
+	
+	//delete para
+	function destroyPara()
+	{
+		var row = $('#paraGrid').datagrid('getSelected');
+		if (row){
+			$.messager.confirm('确认','请确认,您要删除此参数吗？',function(r){
+				if (r){
+					$.post('deletePara',{paraId:row.paraId},function(result){
+						if (result.errorMsg){
+							$.messager.show({
+								title: 'Error',
+								msg: result.errorMsg
+							});
+						} else {
+							$('#paraGrid').datagrid('reload');	// reload the user data
+						}
+					},'json');
+				}
+			});
+		}else
+		{
+			$.messager.show({
+				title: '提示',
+				msg: "请选中参数行！"
+			});
+		}
+		
+	}
+	
+	function savePara(){
+		$('#fm').form('submit',{
+			url: url,
+			onSubmit: function(){
+				return $(this).form('validate');
+			},
+			success: function(result){
+				var result = eval('('+result+')');
+				if (result.errorMsg){
+					$.messager.show({
+						title: 'Error',
+						msg: result.errorMsg
+					});
+				} else {
+					$('#dlg').dialog('close');		// close the dialog
+					$('#paraGrid').datagrid('reload');	// reload the user data
+				}
+			}
+		});
+	}
+	
+</script>
+</head>
+<body>
+	<div>
+	<b>选择类型:</b>
+	<select id="showtypes" style="width: 120px; height: 24px;" >
+	</select>
+	<a href="javascript:query();" class="easyui-linkbutton" iconCls="icon-search">查 询</a>
+	</div>
+	<table id="paraGrid" class="easyui-datagrid" style="width:100%;height:400px"
+		toolbar="#toolbar" rownumbers="true" fitColumns="true" singleSelect="true">
+        <thead>
+            <tr></tr>
+         </thead>
+    </table>
+    <div id="toolbar">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newPara()">新增参数</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editPara()">编辑参数</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyPara()">删除参数</a>
+	</div>
+	
+	<div id="dlg" class="easyui-dialog" style="width:300px;height:300px;padding:10px 20px"
+		closed="true" buttons="#dlg-buttons">
+	<div class="ftitle"></div>
+	
+	<form id="fm" method="post">
+		<div class="fitem">
+			<label>编  码:</label>
+			<input name="paraCode" class="easyui-validatebox" required="true">
+		</div>
+		<div class="fitem">
+			<label>类   别:</label>
+			<input name="paraType" class="easyui-validatebox" required="true">
+		</div>
+		<div class="fitem">
+			<label>序   号:</label>
+			<input name="paraIndex" class="easyui-validatebox" required="true">
+		</div>
+		<div class="fitem">
+			<label>名   称:</label>
+			<input name="paraName" class="easyui-validatebox" required="true">
+		</div>
+		<div class="fitem">
+			<label>描   述:</label>
+			<input name="paraDescription" type="text">
+		</div>
+		<div class="fitem">
+			<label>数   值:</label>
+			<input name="paraValue" class="easyui-validatebox" required="true">
+		</div>
+		<div class="fitem">
+			<label>有   效:</label>
+			<select name="paraIsValid" class="easyui-combobox" style="width:175px;">
+			<option value=1>是</option>
+			<option value=0>否</option>
+			</select>
+		</div>
+		<div class="fitem">
+			<label>备   注:</label>
+			<input name="paraNote">
+		</div>
+	</form>
+	</div>
+	<div id="dlg-buttons">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="savePara();">保存</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
+	</div>
+</body>
+</html>

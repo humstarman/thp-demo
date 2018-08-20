@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>THPBuilder</title>
+<!-- Sets the basepath for the library if not in same directory -->
+	<script type="text/javascript">
+		mxBasePath = 'public/js/sourceCode/src';
+		function GetQueryString(name)
+		{
+		     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		     var r = window.location.search.substr(1).match(reg);
+		     if(r!=null)return  encodeURI(r[2]); return null;
+		}
+	</script>
+
+	<!-- Loads and initializes the library -->
+	<script type="text/javascript" src="public/js/sourceCode/mxClient.js"></script>
+	<script type="text/javascript" src="public/js/echarts.js"></script>
+
+	<script type="text/javascript" src="public/js/sourceCode/app/app.js"></script>
+	<script type="text/javascript" src="public/js/sourceCode/app/md5.js"></script>
+</head>
+<body>
+	<div id="container" style="overflow:hidden;"></div>
+</body>
+	<script type="text/javascript">
+	
+
+	
+		//获取服务端数据
+		var _gTask=new gTask();
+		
+		var xml = GetQueryString("key")
+		if(null==xml){
+		    xml="pages/变电站主接线图.xml";
+		}
+		var xmlName =decodeURI(xml);
+		
+		var graphicsArr=_gTask.getXMLData(xmlName);
+		
+		
+		var map = new gMap(document.getElementById("container"));
+		map.drawGraphics(graphicsArr);
+		
+		//map.fit();
+		//graph.fullDisplay();
+		
+	</script>
+</html>

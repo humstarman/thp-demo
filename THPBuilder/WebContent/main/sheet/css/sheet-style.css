@@ -1,0 +1,79 @@
+.currentTd
+{
+    border: 1px solid red;
+}
+
+.selectStyle
+{
+    width: 40px;
+}
+
+.fontSytle
+{
+    width: 120px;
+    height:32px;
+    -moz-background-size:100% 100%;
+}
+
+.fontSize{
+    width: 150px;
+    height:30px;
+}
+
+.fontBold{
+    font-weight: bold;
+ }
+
+.fontItalic{
+    font-style: italic;
+}
+
+.fontUnderline{
+    text-decoration:underline;
+}
+
+.box{
+    border: 1px solid black;
+    color: #337ab7;
+    display: block;
+    font-size:20em;
+    width: 30px;
+    height: 30px;
+    float: left;
+}
+
+.labbox{
+    color: #337ab7;
+    vertical-align: middle;
+    padding-top:8px;
+    width: 50px;
+    height: 30px;
+    float: left;
+}
+
+.handsontable .htBold{
+    font-weight: bold;
+}
+.handsontable .htItalic{
+    font-style: italic;
+}
+.handsontable .htUnderline{
+    text-decoration:underline;
+}
+
+.colorStyle{
+    height:30px;
+    width: 300px;
+}
+
+.colorBK{
+    background-color: #ff0000;
+}
+
+.colorFT{
+    background-color: #00ff00;
+}
+
+.colorBD{
+    background-color: #0000ff;
+}

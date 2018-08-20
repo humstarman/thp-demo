@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>thpower cloud</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="keywords" content="power system,online,diagram,power">
+	<link rel="shortcut icon" href="main/images/favicon.ico">
+	
+	<link href="main/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="main/istyles/animate.css" rel="stylesheet">
+	<link href="main/istyles/flexslider.css" rel="stylesheet">
+	<link href="main/autohtml/css/icomoon.css" rel="stylesheet">
+	<link href="main/istyles/style.css" rel="stylesheet">
+	<link href="main/istyles/public.css" rel="stylesheet">
+	<link href="main/istyles/index.css" rel="stylesheet">
+	<link href="main/istyles/mainpage.css" rel="stylesheet">
+	<link href="main/istyles/mainpagestyle.css" rel="stylesheet">
+	<link href="main/tooltipster/tooltipster-sideTip-shadow.min.css" rel="stylesheet">
+	<link href="main/tooltipster/tooltipster.bundle.css" rel="stylesheet">
+	<link href="main/toastr/toastr.css" rel="stylesheet">
+	
+	<script type="text/javascript" src="main/js/jsi18n.js"></script>
+		
+	<script type="text/javascript" src="main/js/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="main/js/lz-string.js"></script>
+	<script type="text/javascript" src="main/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="main/tooltipster/tooltipster.bundle.min.js"></script>
+	<script type="text/javascript" src="main/toastr/toastr.min.js"></script>
+	<script type="text/javascript" src="main/js/jquery.form.js"></script>
+	<script type="text/javascript" src="main/js/jquery.flexslider-min.js"></script>
+	<script type="text/javascript" src="main/js/jquery.waypoints.min.js"></script>
+	<script type="text/javascript" src="main/js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="main/js/modernizr-2.6.2.min.js"></script>
+	<script type="text/javascript" src="main/js/Particleground.js"></script>
+	<script type="text/javascript" src="main/js/reveal.js"></script>
+			
+	<style type="text/css">
+		html,body
+		{
+		 overflow-x: hidden;
+		}
+		
+		footer {
+			clear: both;
+			padding: 1em 0px 0px 0px !important;
+			text-align: center;
+			position: relative;
+			z-index: 33;
+			background: #ebf0f8;
+		}
+		
+		.footercontainer {
+			min-height: 50px;
+			width: 1300px;
+			background: #ebf0f8;
+		}
+		
+		.copyright.row {
+			padding-top: 0px;
+			margin-top: 0px;
+		}
+		
+		footer a {
+			color: #9e9e9e;
+			transition: 0.5s;
+		}
+		
+		footer a:hover {
+			color: #000;
+		}
+		
+		footer a:not (:last-child ){
+			margin-right: 25px;
+		}
+		
+		@media screen and (max-width: 768px) {
+			.footercontainer {
+				width: 100%;
+			}
+			footer {
+				font-size: 14px !important;
+			}
+		}
+	</style>
+	
+<script type="text/javascript">
+/*
+    var user_unique_id  = getCookie('userId');
+    $.get(
+    	"/THPBuilder/login_status", 
+    	{userid: -1},    	
+    	function(result){ 
+	        if(result.is_login)
+	        {	        	
+	            user_unique_id = result.id;
+	            $("#to_login_div").hide();
+	            $("#user_menu").show();
+	            $("#username_span").text(result.username);
+	            $("#head_portrait_a").attr("src", result.head_portrait);
+	            
+	            var update_href = function(a){
+	                var href = a.attr("href");
+	                href = href + result.id + "/";
+	                a.attr("href", href);
+	            };
+*/	
+	            //daovoice init
+	            /*
+	            daovoice('init', {
+	              app_id: "abcfe652",
+	              user_id: result.id, // 必填: 该用户在您系统上的唯一ID
+	              email: result.email, // 选填:  该用户在您系统上的主邮箱
+	              name: result.username, // 选填: 用户名
+	              signed_up: result.signuptime, // 选填: 用户的注册时间，用Unix时间戳表示
+	              secure_digest:result.secure_digest//app secure_digest
+	            });
+	            daovoice('update');
+	            */
+/*	
+	        } else	        	
+	        {	        	
+	            $("#to_login_div").show();
+	            $("#user_menu").hide();
+*/	            
+	            /*
+	            daovoice('init', {
+	              app_id: "thpower12345"
+	            });          
+	            */
+	            //daovoice('update');
+/*	        }
+	
+	        var left = ($("#user_menu").width() - 170);
+	        var ml = -15 - ($("#user_menu").width() - 170);
+	        $("#user_menu").css("margin-left", ml + "px");
+	        $("#user_menu").css("position", "relative");
+	       // $("#user_menu").css("left", left + "px");
+	       
+	    }, 
+    	'json'
+    ); 
+ */   
+</script>
+
+</head>
+<body>
+
+<div class="signform loginanimate" id="signform" style="display: none;">
+    <div class="signclose">
+        <img src="main/istyles/invalid-circle-close-delete-cross-x-incorrect-icon.svg" width="35px" height="35px">
+    </div>
+    <form id="login_form" action="to_login" method="post" onsubmit="return saveForm()">
+        <input type="hidden" name="csrfmiddlewaretoken" value="wHTKHDHcFoYjTAUaKJFQoV6sjBd8mBRh">
+        <div class="userdiv">
+            <input id="user" class="signinput" type="text" placeholder="邮箱" name="email" value="thpower@qq.com">
+        </div>
+        <div class="pwddiv">
+            <input id="pwd" class="signinput" type="password" placeholder="密码" name="password" value="123456">
+        </div>
+
+        <div class="postdiv">
+            <button id="loginBtn">登录</button>
+        </div>
+        <a href="index.html#" name="forgetpwd" style="text-decoration: none;color: #43A047; font-size: 12px;">忘记密码</a>
+        <span style="color:red" id="emailerrors"></span>
+        <br>
+
+        <div class="change" style="color: #4d4d4d">
+            <p><a href="index.html#" class="changereg" name="changereg" style="text-decoration: none;color: #43A047">还没有账号？赶快注册一个吧</a></p>
+        </div>
+    </form>
+
+</div>
+
+<div class="signformword forgetanimate" id="signformpwd" style="display: none">
+
+    <div class="signclose">
+        <img src="main/istyles/invalid-circle-close-delete-cross-x-incorrect-icon.svg" width="35px" height="35px">
+    </div>
+    <form id="forget_form" action="" method="post" onsubmit="return saveForm()">
+        <input type="hidden" name="csrfmiddlewaretoken" value="wHTKHDHcFoYjTAUaKJFQoV6sjBd8mBRh">
+        <div class="userdiv">
+
+            <input id="forgetemail" class="signinput" type="text" placeholder="邮箱" name="email">
+        </div>
+
+        <div class="postdiv">
+            <button id="send_reset_code">获取验证码</button>
+
+        </div>
+        <a href="#" name="forgetpwd" style="text-decoration: none;color: #43A047; font-size: 12px;">返回登录</a>
+
+        <br>
+        <span style="color:red" id="forgetanemailerrors"></span>
+        <div class="change" style="color: #4d4d4d">
+            <p><a href="#" id="pwstreg" style="text-decoration: none;color: #43A047">还没有账号？赶快注册一个吧</a></p>
+        </div>
+    </form>
+</div>
+
+<div class="signformreset resetanimate" id="resetpwd" style="display: none">
+
+    <div class="signclose">
+        <img src="main/istyles/invalid-circle-close-delete-cross-x-incorrect-icon.svg" width="35px" height="35px">
+    </div>
+    <form id="reset_form" action="" method="post" onsubmit="return saveForm()">
+        <input type="hidden" name="csrfmiddlewaretoken" value="wHTKHDHcFoYjTAUaKJFQoV6sjBd8mBRh">
+        <div class="userdiv">
+
+            <input id="restuser" class="signinput" type="text" placeholder="邮箱" name="email_reset">
+        </div>
+        <div class="pwddiv">
+            <input id="resetpwd" class="signinput" type="password" placeholder="密码" name="password">
+        </div>
+        <div class="pwddiv">
+            <input id="resetpwdre" class="signinput" type="password" placeholder="确认密码" name="passwordre">
+        </div>
+        <div class="regcode">
+            <input type="text" class="reg-card" name="reset_code" value="" placeholder="验证码">
+            <button type="button" class="btn btn-default btn-sm" id="re_reset_code">重新发送</button>
+        </div>
+        <div class="postdiv">
+            <button id="resetpwdbtn">确定</button>
+        </div>
+        <span style="color:red" id="resetemailerrors"></span>
+        <br>
+    </form>
+</div>
+
+<div class="signform reqform pwstoreg reqanimate" id="registerform" style="display: none">
+
+    <div class="signclose">
+        <img src="main/istyles/invalid-circle-close-delete-cross-x-incorrect-icon.svg" width="35px" height="35px">
+    </div>
+    <form id="req_form" action="" method="post" onsubmit="return saveForm()">
+        <input type="hidden" name="csrfmiddlewaretoken" value="wHTKHDHcFoYjTAUaKJFQoV6sjBd8mBRh">
+        <div class="userdiv">
+            <input id="registeruser" class="signinput" type="text" placeholder="用户名" name="username" >
+            <small class="error error5" style="color:red; display: block;"></small>
+        </div>
+        <div class="pwddiv">
+            <input id="email-input" class="signinput" type="text" placeholder="邮箱" name="email">
+            <small class="error error5" style="color:red;display: block;"></small> 
+        </div>
+        <div class="regcode">
+            <input type="text" class="reg-card" name="reg_code" value="" placeholder="注册码">
+            <button type="button" class="btn btn-default btn-sm" id="send_reg_code">发送注册码</button>
+            <small class="error error5" style="color:red;display: block;"></small> 
+        </div>
+        <div class="pwddiv">
+            <input id="registerpwd" class="signinput" type="password" placeholder="密码" name="password">
+            <small class="error error5" style="color:red;display: block;"></small> 
+        </div>
+        <div class="pwddiv">
+            <input id="registerrepwd" class="signinput" type="password" placeholder="再次输入密码" name="password_repeat">
+            <small class="error error5" style="color:red;display: block;"></small> 
+        </div>
+        
+        <div class="postdiv">
+            <button id="reqbtn">注册</button>
+        </div>
+        <!-- <span style="color:red" id="regerrors"></span> -->
+        <br>
+        <div class="change" style="color: #4d4d4d">
+            <p><a href="#" name="changereg" style="text-decoration: none;color: #43A047">已有账号?立刻去登录吧</a></p>
+        </div>
+    </form>
+</div>
+
+<!-- top -->
+	
+<nav class="fh5co-nav" role="navigation">
+    <div class="top-menu">
+        <div class="container" style="width: 100%;">
+            <div class="row">
+                <div class="col-xs-2">
+                    <div id="fh5co-logo"><a class="navbar-brand navbar-logo" href="http://www.thpower.com/">Brand</a></div>
+                </div>
+                <div class="col-xs-10 text-right menu-1">
+                    <ul>
+                        <li><a href="http://www.thpower.com">首&nbsp;页</a></li>
+                        <!-- 
+                        <li><a href="http://www.thpower.com">运行情况</a></li>
+                        <li><a href="http://www.thpower.com">常见问题</a></li>
+                        <li><a href="http://www.thpower.com">资源下载</a></li>
+                         -->
+                        <li class="btn-cta" id="to_login_div" onclick="start()"><a href="javascript:void(0)"><span>登录</span></a></li>
+                        <li class="" id="user_menu" style="display: none;">
+                            <a href="to_logout">退出</a>
+                            <a href="main.html"><button class="btn btn-primary" style="background: #00a0e9; border: 2px solid #00a0e9; ">进入我的主页</button></a>
+                            <a style="display: none;" href="javascript:void(0)" class="dropdown-toggle personal-box"><span id="username_span"></span>
+                            <img style="border-radius: 50%;" width="40" height="40" name="head_portrait_a" src="main/images/logo.png" alt=""><span class="icon-angle-down"></span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+     <div id="fh5co-started" style="padding:0px;height: 680px;"><canvas class="pg-canvas" width="1903" height="680"></canvas>
+     </div>
+
+
+	<footer id="fh5co-footer" role="contentinfo">
+		<div class="container footercontainer">
+			<div class="row copyright">
+				<div class="col-md-12 text-center">
+					<p>
+						<small><a href="http://www.miitbeian.gov.cn/">Copyright © 2017 by THPOWER 京ICP备16001841号-1</a></small>
+					</p>
+					<p>
+						<small>Powered by <a href="http://www.thpower.com/">北京国科恒通科技股份有限公司</a></small>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	
+	    <div>
+
+        <div class="gototop js-top">
+            <a href="index.html" id="gotopheade" class="js-gotop "><i class="icon-arrow-up22 "></i></a>
+        </div>
+        <!-- <div class="gototop active ">
+            <a href="# " class="js-like "><i class="icon-heart2 "></i></a>
+        </div> -->
+    </div>
+	
+	<script type="text/javascript" src="main/js/indexpage_init.js"></script>
+	
+<script>
+   window.off_key = '';
+</script>
+    
+<script>
+    $('.fz-navbar-nav li').click(function(e) {
+        $('.fz-navbar-nav li').removeClass('active');
+        $(this).addClass('active');
+    });
+    
+    $(document).ready(function() {
+        //粒子背景特效
+        $('#fh5co-started').particleground({
+            dotColor: '#00a0e9',
+            lineColor: '#00a0e9',
+            minSpeedX: 0.2,
+            minSpeedY: 0.2,
+            directionX: 'center',
+        });
+        $('#try_btn').click(function() {
+            if (getCookie('loginStatus')) {
+                window.location.href = "/editor/";
+            } else {
+                off_key = 'toeditor';
+                start();
+            }
+        });
+        $('#try_btn2').click(function() {
+            if (getCookie('loginStatus')) {
+                window.location.href = "/editor/?editorType=1";
+            } else {
+                off_key = 'toeditor';
+                start();
+            }
+        });
+        $('#try_now').click(function() {
+            if (getCookie('loginStatus')) {
+                window.location.href = "/editor/";
+            } else {
+                off_key = 'toeditor';
+                start();
+            }
+        });   
+        
+    });
+</script>
+    
+</body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" 
+				value="%-5p %d{MM-dd HH:mm:ss,SSS} %m  (%F:%L) \n" />
+		</layout>
+	</appender>
+	<!-- 输出日志到文件  每天一个文件 -->  
+    <appender name="dailyRollingFile"  
+        class="org.apache.log4j.DailyRollingFileAppender">  
+        <param name="Threshold" value="info"></param>  
+        <param name="ImmediateFlush" value="true"></param>  
+        <param name="File" value="d:/logs/log.log"></param>  
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"></param>  
+        <layout class="org.apache.log4j.PatternLayout">  
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss\} %-5p] [%t] {%c:%L}-%m%n"></param>  
+        </layout>  
+    </appender>   
+    <!-- 
+	<logger name="java.sql">
+		<level value="debug" />
+	</logger>
+	<logger name="org.apache.ibatis">
+		<level value="info" />
+	</logger>
+	 -->
+	 <!-- 指定包日志的输入级别 -->
+	 <logger name="com.thp">
+		<level value="info" />
+	</logger>
+	 <!-- 指定最高输出级别 -->
+	<root>
+		<level value="error" />
+		<appender-ref ref="STDOUT" />
+	    <appender-ref ref="dailyRollingFile" />   
+	</root>
+</log4j:configuration>

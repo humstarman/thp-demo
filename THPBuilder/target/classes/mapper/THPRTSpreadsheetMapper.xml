@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thpower.scada.mapper.THPRTSpreadsheetMapper">
+
+	<select id="getAllSheets"  resultType="THPRTSpreadsheet">
+		select * from sys_rtspreadsheets;
+	</select>
+	
+	<select id="getSheetsByProId" parameterType="String" resultType="THPRTSpreadsheet">
+		select * from sys_rtspreadsheets 
+		where proId = #{proId};
+	</select>	
+	
+	<select id="select" parameterType="long" resultType="THPRTSpreadsheet">
+		select * from sys_rtspreadsheets 
+		where sheetId = #{sheetId};
+	</select>
+	
+	<insert id="insert" parameterType="THPRTSpreadsheet"  useGeneratedKeys="true" keyProperty="sheetId" >
+	     insert into sys_rtspreadsheets (proId, sheetKey, sheetType, sheetName,  sheetStats, sheetStartTime, sheetEndTime, sheetContent, sheetCreateTime) 
+	     values (#{proId}, #{sheetKey},  #{sheetType}, #{sheetName},  #{sheetStats}, #{sheetStartTime}, #{sheetEndTime}, #{sheetContent}, #{sheetCreateTime});
+    </insert>
+    
+    <update id="update" parameterType="THPRTSpreadsheet">
+            update sys_rtspreadsheets 
+            set proId=#{proId}, sheetKey=#{sheetKey}, sheetType=#{sheetType}, sheetName=#{sheetName},  sheetStats=#{sheetStats}, sheetStartTime=#{sheetStartTime}, sheetEndTime=#{sheetEndTime}, sheetContent=#{sheetContent}, sheetCreateTime=#{sheetCreateTime} 
+            where sheetId=#{sheetId};
+    </update>    
+    
+	<delete  id="delete" parameterType="long">
+		delete from sys_rtspreadsheets 
+		where sheetId = #{sheetId};
+	</delete >
+            
+</mapper>

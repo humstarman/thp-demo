@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>THPower Cloud</title>
+	<link rel="shortcut icon" href="static/icons/favicon.ico">		
+     <link rel="stylesheet" href="static/styles/GModel.css">
+
+	<script type="text/javascript" src="static/jquery/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="main/js/viewpage.js"></script>
+	<script type="text/javascript" src="main/numeral/numeral.min.js"></script>
+	
+	<script type="text/javascript">
+		
+       function GetQueryString(name) {
+            var str = window.location.href; //取得整个地址栏
+            var num = str.indexOf("?")
+            str = str.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
+
+            var arr = str.split("&"); //各个参数放到数组里
+            for (var i = 0; i < arr.length; i++) {
+                num = arr[i].indexOf("=");
+                if (num > 0) {
+                    if (name === arr[i].substring(0, num)) {
+                        return decodeURIComponent(arr[i].substr(num + 1));
+                    }
+                }
+            }
+            return "";
+        }
+       
+ 	  	var urlParams = (function (url) {
+	        var result = new Object();
+	        var idx = url.lastIndexOf('?');
+	
+	        if (idx > 0) {
+	            var params = url.substring(idx + 1).split('&');
+	
+	            for (var i = 0; i < params.length; i++) {
+	                idx = params[i].indexOf('=');
+	
+	                if (idx > 0) {
+	                    result[params[i].substring(0, idx)] = params[i].substring(idx + 1);
+	                }
+	            }
+	        }
+	
+	        return result;
+	    })(window.location.href);
+ 	  	
+ 	  	var RESOURCES_PATH = 'static/resources';
+	    var STENCIL_PATH = 'static/stencils';
+	    var IMAGE_PATH = 'static/images';
+	    var STYLE_PATH = 'static/editor';
+	    var CSS_PATH = 'static/styles';
+	    
+	    mxBasePath = 'static/mxgraph';
+		xmlBaseContent='';
+    
+	</script>
+	
+	<!-- Loads and initializes the library -->
+	<script type="text/javascript" src="static/mxgraph/js/mxClient.js"></script>
+	<script type="text/javascript" src="static/thpower/main-editor.js"></script>
+	<script type="text/javascript" src="static/sanitizer/sanitizer.min.js"></script>
+	<script type="text/javascript" src="static/js/Graph.js"></script>
+	<script type="text/javascript" src="static/js/Shapes.js"></script>	
+	<script type="text/javascript" src="static/js/echarts.js"></script>
+	<script type="text/javascript" src="static/js/Time.js"></script>
+	<script type="text/javascript" src="static/app/option.js"></script>	
+			
+	<script type="text/javascript" src="static/js/GModel.js"></script>	
+	<script type="text/javascript" src="main/js/viewer.js"></script>	
+	
+</head>
+<body>
+	<div style="background:url(main/images/topbg.png) repeat-x;display:flex;display: -webkit-flex;align-items:center;">
+		<a href="javascript:void(0)" target="_parent"><img src="main/images/syslogo.png" title="智慧能源实时监控系统" /></a>
+		<!--  
+		<input type="button" value="运行" onclick="run()" style="margin-left:10px; height:30px;width:80px;"/>
+		<input type="button" value="编辑" onclick="edit()" style="margin-left:10px; height:30px;width:80px;"/>
+		-->
+		<input type="button" value="查看" onclick="ViewXML()" style="margin-left:10px; height:30px;width:80px;"/>		
+		<input id="btnTimer" type="button" value="刷新" onclick="timerUpdate()" style="margin-left:10px; height:30px;width:80px;"/>		
+	</div>
+	<!--<input type="button" value="实时数据刷新" onclick="updateValue(updateids,mygraph)"/>
+	<input type="button" value="刷新" onclick="refresh()"/>-->
+	<!-- Creates a container for the graph with a grid wallpaper -->
+	<div id="graphContainer"
+		 style="position:relative;overflow:hidden;width:100%;height:100%;cursor:default;">
+	</div>
+
+	<script type="text/javascript" src="static/js/GModel.js"></script>
+	<script type="text/javascript">
+		var menuid = GetQueryString("menuid");
+		
+		//console.log(menuid);
+		
+		$.get(
+		        '/THPBuilder/getMenu',
+		        {menuid: menuid},
+		        function(response, status, jxhr){         	
+		            if( status == "success" )
+		            {  
+		            	menuData = response.menu;
+		            	
+		            	//如果没数据，调用模拟数据
+		            	if (menuData == null || menuData =='')
+	            		{
+							xmlBaseContent='<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/><GObject gobjType="GDataTag" label="123v" phyType="电压" valueFormat="v" bShowPhy="0" bShowUnit="0" bShowTime="0" id="4"><DataMultiStatus as="multiStatus"><TextDrawStyle textColor="#CCC" bBLink="0" as="deNormalSatus"/><DataDrawingDef lower="40" upper="50" as="normalStatus"><TextDrawStyle textColor="#ddd" bBLink="0" as="drawStyle"/></DataDrawingDef></DataMultiStatus><mxCell style="shape=label;fillColor=none;strokeColor=none" vertex="1" parent="1"><mxGeometry x="120" y="20" width="80" height="30" as="geometry"/></mxCell></GObject><GObject gobjType="GChartGauge" dataSrc="localhost:8080" dataIds="123" title="仪表盘" nowTime="*" id="9"><Object as="options"><Object formatter="{a} &lt;br/&gt;{b} : {c}%" as="tooltip"/><Array as="series"><Object name="仪表盘" min="0" max="100" splitNumber="10" type="gauge"><Object formatter="{value}%" as="detail"/><Array as="data"><Object value="35" name="测点1"/></Array></Object></Array></Object><mxCell style="overflow=fill;fillColor=#ffffff;fontColor=#000000;" vertex="1" parent="1"><mxGeometry x="0" y="40" width="280" height="300" as="geometry"/></mxCell></GObject></root></mxGraphModel>';
+	            			
+	            		}else
+            			{
+	            			xmlBaseContent=menuData.menuContent;
+            			}
+		            	
+		            	main(document.getElementById('graphContainer'));		            	
+		            	
+		            }else{
+		                alert("load menu error!");
+		            }			            
+		        },
+		        'json'
+		    );
+			
+	
+	</script>
+
+
+</body>	
+</html>

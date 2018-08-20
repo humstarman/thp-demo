@@ -1,0 +1,213 @@
+<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>
+    <GObject gobjType="GDataTag" phyType="电压" dispUnit="v" bShowPhy="1" bShowUnit="1" label="l23" id="2"><mxCell parent="1" style="shape=label;fillColor=none;strokeColor=none;fontColor=#000;" vertex="1"><mxGeometry x="20" y="20" width="80" height="30" as="geometry"/></mxCell></GObject>
+    <GObject gobjType="GImage" url="./static/images/assembly/photo.png" name="img_photo" id="4"><mxCell parent="1" vertex="1"><mxGeometry x="20" y="20" width="50" height="50" as="geometry"/></mxCell></GObject>
+    <GObject gobjType="GButton" label="跳转" id="5"><Object click="function(cell){console.log(cell.value.pageId);window.location.href=&#39;./&#39;;}" as="events"/><mxCell vertex="1" parent="1"><mxGeometry x="20" y="20" width="80" height="30" as="geometry"/></mxCell></GObject>
+    <GObject gobjType="GChartTrend" dataSrc="localhost:8080" title="趋势图" id="6">
+        <Array as="dataIds">
+            <add value="3980"/>
+            <add value="4000"/>
+        </Array>
+        <Object as="options">
+            <Object text="趋势图" as="title"/>
+            <Object trigger="axis" as="tooltip"/>
+            <Object bottom="80" as="grid"/>
+            <Object type="category" boundaryGap="0" as="xAxis">
+                <Object show="1" as="splitLine"/>
+                <Object showMinLabel="1" showMaxLabel="1" as="axisLabel"/>
+            </Object>
+            <Object type="value" as="yAxis"/>
+            <Array as="dataZoom">
+                <Object type="inside" start="0" end="100"/>
+                <Object start="0" end="100" handleIcon="M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z" handleSize="80%">
+                    <Object color="#fff" shadowBlur="3" shadowColor="rgba(0, 0, 0, 0.6)" shadowOffsetX="2" shadowOffsetY="2" as="handleStyle"/>
+                </Object>
+            </Array>
+            <Array as="series">
+                <Object name="线路1" type="line" showSymbol="0" hoverAnimation="0">
+                    <Array as="data">
+                        <Array>
+                            <add value="2009/10/13&#xa;0:00"/>
+                            <add value="0"/>
+                        </Array>
+                        <Array>
+                            <add value="2009/10/13&#xa;1:00"/>
+                            <add value="1"/>
+                        </Array>
+                        <Array>
+                            <add value="2009/10/13&#xa;2:00"/>
+                            <add value="2"/>
+                        </Array>
+                        <Array>
+                            <add value="2009/10/13&#xa;3:00"/>
+                            <add value="3"/>
+                        </Array>
+                        <Array>
+                            <add value="2009/10/13&#xa;4:00"/>
+                            <add value="4"/>
+                        </Array>
+                    </Array>
+                </Object>
+                <Object name="线路2" type="line" showSymbol="0" hoverAnimation="0">
+                    <Array as="data">
+                        <Array>
+                            <add value="2009/10/13&#xa;0:00"/>
+                            <add value="0"/>
+                        </Array>
+                        <Array>
+                            <add value="2009/10/13&#xa;1:00"/>
+                            <add value="2"/>
+                        </Array>
+                        <Array>
+                            <add value="2009/10/13&#xa;2:00"/>
+                            <add value="4"/>
+                        </Array>
+                        <Array>
+                            <add value="2009/10/13&#xa;3:00"/>
+                            <add value="6"/>
+                        </Array>
+                        <Array>
+                            <add value="2009/10/13&#xa;4:00"/>
+                            <add value="8"/>
+                        </Array>
+                    </Array>
+                </Object>
+            </Array>
+        </Object>
+        <mxCell style="overflow=fill;fillColor=none;fontColor=#000000;strokeColor=none;" vertex="1" parent="1">
+            <mxGeometry x="0" y="0" width="300" height="300" as="geometry"/>
+        </mxCell>
+    </GObject>
+    <GObject gobjType="GChartBar" dataSrc="localhost:8080" dataIds="123" title="测点1" nowTime="*" max="300" min="20" id="7">
+        <Object backgroundColor="transparent" as="options">
+            <Object show="0" as="tooltip"/>
+            <Object top="10" left="30" right="10" bottom="30" as="grid"/>
+            <Object offset="0" as="xAxis">
+                <Array as="data">
+                    <add value="测点1"/>
+                </Array>
+                <Object show="0" as="axisTick"/>
+                <Object show="0" as="axisLine"/>
+                <Object color="#333" fontSize="14" as="axisLabel"/>
+            </Object>
+            <Object min="300" max="20" as="yAxis">
+                <Object show="0" as="splitLine"/>
+                <Object show="1" as="axisTick"/>
+                <Object show="1" as="axisLine"/>
+                <Object show="1" color="#333" as="axisLabel"/>
+            </Object>
+            <Array as="series">
+                <Object type="bar" barWidth="100%" z="10">
+                    <Object show="1" position="top" padding="10" color="#2979ff" fontSize="14" formatter="{c}" as="label"/>
+                    <Object as="itemStyle">
+                        <Object type="linear" x="0" y="0" x2="0" y2="1" globalCoord="0" as="color">
+                            <Array as="colorStops">
+                                <Object offset="0" color="rgba(41, 121, 255, 1)"/>
+                                <Object offset="1" color="rgba(0, 192, 255, 1)"/>
+                            </Array>
+                        </Object>
+                    </Object>
+                    <Array as="data">
+                        <add value="34"/>
+                    </Array>
+                </Object>
+                <Object type="bar" barGap="-100%" barWidth="100%" z="5">
+                    <Object opacity="0.05" color="#536dfe" as="itemStyle"/>
+                    <Array as="data">
+                        <add value="20"/>
+                    </Array>
+                </Object>
+                <Object type="bar" barGap="-100%" barWidth="100%" z="5">
+                    <Object color="#536dfe" opacity="0.2" as="itemStyle"/>
+                    <Array as="data">
+                        <add value="20"/>
+                    </Array>
+                </Object>
+            </Array>
+        </Object>
+        <mxCell style="overflow=fill;fillColor=none;fontColor=#000000;strokeColor=none;" vertex="1" parent="1">
+            <mxGeometry x="0" y="0" width="120" height="300" as="geometry"/>
+        </mxCell>
+    </GObject>
+    <GObject gobjType="GChartPie" dataSrc="localhost:8080" title="饼图" nowTime="*" id="8">
+        <Array as="dataIds">
+            <add value="123"/>
+            <add value="456"/>
+            <add value="789"/>
+        </Array>
+        <Object as="options">
+            <Object trigger="item" formatter="{a} &lt;br/&gt;{b} : {c} ({d}%)" as="tooltip"/>
+            <Array as="series">
+                <Object name="饼图" type="pie" radius="55%">
+                    <Array as="center">
+                        <add value="50%"/>
+                        <add value="50%"/>
+                    </Array>
+                    <Array as="data">
+                        <Object value="335" name="测点1"/>
+                        <Object value="310" name="测点2"/>
+                        <Object value="310" name="测点3"/>
+                    </Array>
+                    <Object as="itemStyle">
+                        <Object shadowBlur="10" shadowOffsetX="0" shadowColor="rgba(0, 0, 0, 0.5)" as="emphasis"/>
+                    </Object>
+                </Object>
+            </Array>
+        </Object>
+        <mxCell style="overflow=fill;fillColor=none;fontColor=#000000;strokeColor=none;" vertex="1" parent="1">
+            <mxGeometry x="0" y="0" width="300" height="300" as="geometry"/>
+        </mxCell>
+    </GObject>
+    <GObject gobjType="GChartScatter" dataSrc="localhost:8080" dataFormat="0.00" startTime="*" id="9">
+        <Array as="dataIds">
+            <add value="2200"/>
+            <add value="3300"/>
+        </Array>
+        <Object as="options">
+            <Object type="value" as="xAxis">
+                <Object show="0" as="splitLine"/>
+            </Object>
+            <Object type="value" as="yAxis">
+                <Object show="0" as="splitLine"/>
+            </Object>
+            <Array as="series">
+                <Object symbolSize="20" type="scatter">
+                    <Array as="data">
+                        <Array>
+                            <add value="10"/>
+                            <add value="9.14"/>
+                        </Array>
+                        <Array>
+                            <add value="8"/>
+                            <add value="8.14"/>
+                        </Array>
+                        <Array>
+                            <add value="13"/>
+                            <add value="8.74"/>
+                        </Array>
+                    </Array>
+                </Object>
+            </Array>
+        </Object>
+        <Object as="styleOptions"/>
+        <mxCell style="overflow=fill;fillColor=none;fontColor=#000000;strokeColor=none;" vertex="1" parent="1">
+            <mxGeometry x="0" y="0" width="300" height="300" as="geometry"/>
+        </mxCell>
+    </GObject>
+    <GObject gobjType="GChartGauge" dataSrc="localhost:8080" dataIds="123" title="仪表盘" nowTime="*" id="10">
+        <Object as="options">
+            <Object formatter="{a} &lt;br/&gt;{b} : {c}%" as="tooltip"/>
+            <Array as="series">
+                <Object name="仪表盘" min="0" max="100" splitNumber="10" type="gauge">
+                    <Object formatter="{value}%" as="detail"/>
+                    <Array as="data">
+                        <Object value="35" name="测点1"/>
+                    </Array>
+                </Object>
+            </Array>
+        </Object>
+        <mxCell style="overflow=fill;fillColor=none;fontColor=#000000;strokeColor=none;" vertex="1" parent="1">
+            <mxGeometry x="0" y="0" width="300" height="300" as="geometry"/>
+        </mxCell>
+    </GObject>
+    <GObject gobjType="GImage" url="./static/images/assembly/dataTable.png" name="img_dataTable" id="11"><mxCell parent="1" vertex="1"><mxGeometry x="20" y="20" width="50" height="50" as="geometry"/></mxCell></GObject>
+</root></mxGraphModel>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 配置映射类的别名 -->
+	<typeAliases>
+		<typeAlias alias="THPUser" type="com.thpower.scada.model.THPUser" />		
+		<typeAlias alias="THPProject" type="com.thpower.scada.model.THPProject" />
+		<typeAlias alias="THPMenu" type="com.thpower.scada.model.THPMenu" />
+		<typeAlias alias="THPFile" type="com.thpower.scada.model.THPFile" />
+		<typeAlias alias="THPPic" type="com.thpower.scada.model.THPPic" />
+		<typeAlias alias="THPPara" type="com.thpower.scada.model.THPPara" />
+		<typeAlias alias="THPMeta" type="com.thpower.scada.model.THPMeta" />
+		<typeAlias alias="THPRTTemplate" type="com.thpower.scada.model.THPRTTemplate" />
+		<typeAlias alias="THPRTSpreadsheet" type="com.thpower.scada.model.THPRTSpreadsheet" />
+	</typeAliases>
+	
+	<!-- 配置Mapper文件的路径 -->
+	<mappers>
+		<mapper resource="mapper/THPUserMapper.xml" />		
+		<mapper resource="mapper/THPProjectMapper.xml" />
+		<mapper resource="mapper/THPMenuMapper.xml" />	
+		<mapper resource="mapper/THPFileMapper.xml" />	
+		<mapper resource="mapper/THPPicMapper.xml" />		
+		<mapper resource="mapper/THPParaMapper.xml" />		
+		<mapper resource="mapper/THPMetaMapper.xml" />			
+		<mapper resource="mapper/THPRTTemplateMapper.xml" />		
+		<mapper resource="mapper/THPRTSpreadsheetMapper.xml" />
+	</mappers>
+</configuration> 

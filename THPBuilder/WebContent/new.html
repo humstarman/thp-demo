@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Diagram</title>
+<!-- Bootstrap -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- jQuery -->
+<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+<!-- Bootstrap -->
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+</head>
+<script type="text/javascript">
+	
+</script>
+<body>
+	<div class="container">
+		<form role="form">
+			<div class="panel panel-primary">
+
+				<div class="panel-heading">Panel heading</div>
+				<button type="button" class="close"
+					onclick="$('.maskDiv').fadeOut();">
+					<span aria-hidden="true">x</span><span class="sr-only">关闭</span>
+				</button>
+				<label class="radio-inline"> <input type="radio"
+					name="optionsRadiosinline" id="optionsRadios3" value="option1"
+					checked> 新建文件(.xml)
+				</label> <label class="radio-inline"> <input type="radio"
+					name="optionsRadiosinline" id="optionsRadios4" value="option2">
+					新建工程(.pro)
+				</label>
+				<div class="form-group has-success">
+					<label class="control-label" for="inputSuccess1">名称：</label> <input
+						type="text" class="form-control" id="inputSuccess1"
+						aria-describedby="helpBlock2" placeholder="请输入新的名称">
+				</div>
+				<p>
+					<button type="button" class="btn btn-primary btn-lg active">创建</button>
+				</p>
+				<p>
+				<div class="form-group col-md-12 has-feedback" id="file">
+					<label for="" class="control-label col-md-4">选择文件:</label>
+					<div class="col-md-4 input-group">
+						<input id="lefile" type="file" style="display: none"> 
+						<span class="input-group-addon" onclick="$('input[id=lefile]').click();" style="cursor: pointer; background-color: #e7e7e7">
+						<i class="fa fa-folder-open"></i>Browse</span> 
+						<input id="photoCover" 	class="form-control" type="text"> 
+						<span	class="fa fa-download form-control-feedback" style="cursor: pointer; pointer-events: auto;"></span>
+					</div>
+				</div>	 
+				<br></br>           
+				<div class="form-group col-md-12 has-feedback" id="file">
+				<input type="file">
+				</div>	
+				</p>
+			</div>
+									
+		</form>
+	</div>
+</body>
+</html>

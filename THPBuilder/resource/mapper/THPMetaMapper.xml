@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thpower.scada.mapper.THPMetaMapper">
+
+	<select id="getMetas" resultType="THPMeta">
+		select * from sys_metas;
+	</select>
+	
+	<select id="getMetasByLabel" parameterType="String" resultType="THPMeta">
+		select * from sys_metas 
+		where metaLabel LIKE "%"#{metaLabel}"%";
+	</select>
+
+	<update id="updateMetaContent" parameterType="THPMeta">
+		update sys_metas 
+		set metaContent=#{metaContent} 
+		where metaId=#{metaId};
+	</update>
+	
+	
+	<select id="select" parameterType="long" resultType="THPMeta">
+		select * from sys_metas 
+		where metaId = #{metaId};
+	</select>
+
+	<insert id="insert" parameterType="THPMeta" useGeneratedKeys="true" keyProperty="metaId" >
+		insert into sys_metas (metaName, metaContent, metaLabel)
+		values (#{metaName}, #{metaContent}, #{metaLabel});
+	</insert>
+
+	<update id="update" parameterType="THPMeta">
+		update sys_metas 
+		set metaName=#{metaName},metaContent=#{metaContent},metaLabel=#{metaLabel} 
+		where metaId=#{metaId};
+	</update>
+		
+	<delete  id="delete" parameterType="long">
+		delete from sys_metas 
+		where metaId = #{metaId};
+	</delete>
+
+</mapper>

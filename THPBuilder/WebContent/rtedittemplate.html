@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Report Template Editor</title>
+    <link rel="stylesheet" href="main/sheet/css/ui-bootstrap/jquery-ui.custom.css">
+    <link rel="stylesheet" href="main/sheet/css/demo-style.css">
+    <link rel="stylesheet" href="main/sheet/css/sheet-style.css">
+    <link rel="stylesheet" href="main/handsontable/handsontable.full.css">
+    <link rel="stylesheet" href="main/bootstrap/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="main/bootstrap/css/bootstrap-colorpicker.min.css">
+    <link rel="stylesheet" href="main/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="main/printarea/css/ui-lightness/jquery-ui-1.10.4.custom.css" />
+    <link rel="stylesheet" href="main/printarea/PrintArea.css" />
+    <link rel="stylesheet" href="main/bootstrap/css/awesome-bootstrap-checkbox.css" />
+    <link rel="stylesheet" href="main/font-awesome/css/font-awesome.css" />
+    
+    
+    <script type="text/javascript" src="main/sheet/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="main/sheet/js/jquery-ui.custom.min.js"></script>
+    <script type="text/javascript" src="main/sheet/js/numeral.sv-se.js"></script>
+    <script type="text/javascript" src="main/handsontable/handsontable.full.js"></script>
+    <script type="text/javascript" src="main/handsontable/languages/zh-CN.js"></script>
+    <script type="text/javascript" src="main/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="main/bootstrap/js/bootstrap-colorpicker.min.js"></script>
+    <script type="text/javascript" src="main/bootstrap/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="main/sheet/js/report.js"></script>
+    <script type="text/javascript" src="main/printarea/jquery-ui-1.10.4.custom.js"></script>
+    <script type="text/JavaScript" src="main/printarea/jquery.PrintArea.js"> </script>
+    <script type="text/JavaScript" src="main/SimuData.js"> </script>
+    <script type="text/JavaScript" src="main/THPReport.js"> </script>
+    <!-- <script type="text/JavaScript" src="main/mock/mock.js"> </script>  -->
+
+</head>
+<body>
+<div id="tabs" style="position: absolute; vertical-align: middle;">
+    <div id="tabs-header" style="position: relative;">
+        <div style="float: left;">
+            <label style="color: #337ab7;">选择类型：</label>
+            <select id="myTypes" class="selectpicker"></select>
+            <label style="color: #337ab7;">选择模板：</label>
+            <select id="myTemplates" class="selectpicker"></select>
+            <!----> 
+            <input type="button" style="width:100px;height:30px;" onclick="importTemplate();" value="加  载"/> 
+	        <input type="button" style="width:100px;height:30px;" onclick="saveTemplate();" value="保  存"/> 
+	        <input type="button" style="width:100px;height:30px;" onclick="deleteTemplate();" value="删  除"/> 
+	        <input type="button" style="width:100px;height:30px;" onclick="printTemplate();" value="打  印"/>
+        	<input type="button" style="width:100px;height:30px;" onclick="clearContent();" value="清  除"/> 
+	        <input type="button" style="width:100px;height:30px;" onclick="saveAsTemplate();" value="另存为模板"/>
+	        <input type="button" style="width:100px;height:30px;" onclick="saveAsSpreadsheet();" value="另存为报表"/>
+        </div>
+    </div>
+
+    <div id="tabs-toolbar" style="clear:both;">
+        <label style="color: #337ab7;">报表定义：</label>
+        <input id="myInfor" type="text" readOnly style="width:50px;height:26px; text-align: center; background-color: lightcyan; font-weight: 700;"/>
+        <label style="color: #337ab7;">值：</label>
+        <input id="myInput" type="text" style="width:300px;height:26px;"/>
+        <label style="color: #337ab7;">大小：</label>
+        <input id="myRow" type="text" style="width:30px;height:26px;"/>
+        <label style="color: #337ab7;">*</label>
+        <input id="myCol" type="text" style="width:30px;height:26px;"/>
+        <label style="color: #337ab7;">字体：</label>
+        <select id="mySize" ></select>
+        <div class="btn-group fontStyle">
+            <input id="myBold" type="button" class="fontBold box" value="B">
+            <input id="myItalic" type="button" class="fontItalic box" value="I">
+            <input id="myUnderline" type="button" class="fontUnderline box" value="U">
+        </div>
+        <div class="btn-group colorStyle">
+            <label class="labbox">背景色</label><input id="myBK" type="text" class="colorBK box"/>
+            <label class="labbox">前景色</label><input id="myFT" type="text" class="colorFT box" />
+            <label class="labbox">边框色</label><input id="myBD" type="text" class="colorBD box" />
+        </div>             
+        <!--
+        <ul>
+           <li><a href="#tabs-1">Spreadsheet</a>
+           </li>
+         <li><a href="#tabs-1">Spreadgrid</a></li>
+        </ul>-->
+    </div>
+
+    <div id="tabs-toolbar" style="clear:both;">
+        <div style="float: left;">
+        <label style="color: #337ab7;">报表选项：</label>
+        <div class="checkbox checkbox-info checkbox-inline checkbox-circle">
+        <input id="myMax" class="styled" type="checkbox" style="width:20px;height:20px;"/>
+        <label class="checkbox-inline">最大值</label>
+        </div>        
+        <div class="checkbox checkbox-info checkbox-inline checkbox-circle">
+    	<input id="myMin" class="styled" type="checkbox" style="width:20px;height:20px;"/>
+    	<label class="checkbox-inline">最小值</label>
+        </div>
+        <div class="checkbox checkbox-info checkbox-inline checkbox-circle">
+    	<input id="myAvg" class="styled" type="checkbox" style="width:20px;height:20px;"/>
+    	<label class="checkbox-inline">平均值</label>
+        </div>
+        <div class="checkbox checkbox-info checkbox-inline checkbox-circle">
+    	<input id="mySum" class="styled" type="checkbox" style="width:20px;height:20px;"/>
+    	<label class="checkbox-inline">累计值</label>
+        </div>
+        <label style="color: #337ab7;">开始时间：</label>
+        <input id="myStarttime" type="text" style="width:40px;height:26px;" value="0" />
+        <label style="color: #337ab7;">结束时间：</label>
+        <input id="myEndtime" type="text" style="width:40px;height:26px;"  value="23" />
+        </div>    
+    </div>
+    
+    <div id="tabs-body" style="clear:both;">
+        <div id="dataTable"></div>
+        <div id="myconsole"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">确认</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="report_types">报表类型: </label>
+            		<select id="report_types" class="selectpicker"></select>
+                </div>
+                <div class="form-group">
+                    <label for="txt_name">报表名称：</label>
+                    <input type="text" name="txt_name" class="form-control required" id="txt_name" placeholder="请输入名称：">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+                <button type="button" id="btn_submit" onclick="saveToSQL();" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myOK" tabindex="-1" role="dialog" aria-labelledby="myOKLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myOKLabel">成功</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="txt_key">操作成功！</label>
+                    <!--<input type="text" name="txt_key" class="form-control" id="txt_key" placeholder="编码">-->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

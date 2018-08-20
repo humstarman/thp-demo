@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thpower.scada.mapper.THPParaMapper">
+
+	<select id="getParas" resultType="THPPara">
+		select * from sys_Paras;
+	</select>
+	
+	<select id="getParasByType" parameterType="String" resultType="THPPara">
+		select * from sys_Paras
+		where ParaType=#{paratype};
+	</select>	
+	
+	<select id="getParaValue" parameterType="String" resultType="String">
+		select ParaValue from sys_Paras
+		where ParaCode=#{paracode};
+	</select>
+
+	<update id="updateParaValue" parameterType="THPPara">
+		update sys_Paras 
+		set ParaValue=#{paraValue} 
+		where ParaId=#{paraId};
+	</update>
+	
+	
+	<select id="select" parameterType="long" resultType="THPPara">
+		select * from
+		sys_Paras where ParaId = #{paraId};
+	</select>
+
+	<insert id="insert" parameterType="THPPara" useGeneratedKeys="true" keyProperty="ParaId" >
+		insert into sys_Paras (ParaId, ParaCode, ParaType,ParaIndex, ParaName, ParaDescription, ParaValue, ParaIsValid, ParaNote)
+		values (#{paraId},#{paraCode},#{paraType},#{paraIndex},#{paraName},#{paraDescription},#{paraValue},#{paraIsValid},#{paraNote});
+	</insert>
+
+	<update id="update" parameterType="THPPara">
+		update sys_Paras 
+		set ParaCode=#{paraCode},ParaType=#{paraType},ParaIndex=#{paraIndex},ParaName=#{paraName},ParaDescription=#{paraDescription},ParaValue=#{paraValue},ParaIsValid=#{paraIsValid},ParaNote=#{paraNote} 
+		where ParaId=#{paraId};
+	</update>
+		
+	<delete  id="delete" parameterType="long">
+		delete from sys_Paras 
+		where ParaId = #{paraId};
+	</delete >
+	
+	<select id="getTypes" resultType="String">
+		select distinct ParaType from sys_Paras;
+	</select>
+	
+
+</mapper>

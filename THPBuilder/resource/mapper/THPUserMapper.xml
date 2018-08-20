@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thpower.scada.mapper.THPUserMapper">
+
+	<select id="getUserById" parameterType="long" resultType="THPUser">
+		select * from sys_users 
+		where userId = #{userId};
+	</select>
+
+	<select id="getUserByEmail" parameterType="String" resultType="THPUser">
+		select * from sys_users 
+		where userEmail = #{userEmail};
+	</select>
+
+	<select id="getUsersByRootId" parameterType="long" resultType="THPUser">
+		select * from sys_users 
+		where userRootId = #{userRootId};
+	</select>	
+
+	<select id="login" resultType="THPUser">
+		select * from sys_users 
+		where userEmail = #{0} and userPassword = #{1} ;
+	</select>	
+	
+	<select id="select" parameterType="long" resultType="THPUser">
+		select * from sys_users 
+		where userId = #{userId};
+	</select>
+	
+	<insert id="insert" parameterType="THPUser"  useGeneratedKeys="true" keyProperty="userId" >
+	     insert into sys_users (userRootId, userEmail,  userName,  userPassword, userAge, userSex, userNote) 
+	     values (#{userRootId}, #{userEmail},  #{userName},  #{userPassword}, #{userAge}, #{userSex},#{userNote} );
+    </insert>
+    
+    <update id="update" parameterType="THPUser">
+            update sys_users 
+            set userName=#{userName},userAge=#{userAge} 
+            where userId=#{userId};
+    </update>    
+    
+	<delete  id="delete" parameterType="long">
+		delete from sys_users 
+		where userId = #{userId};
+	</delete >
+            
+</mapper>

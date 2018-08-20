@@ -1,0 +1,4 @@
+*.swp
+*.yaml
+tmp.sh
+nohup.out

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thpower.scada.mapper.THPPicMapper">
+
+	<select id="getMultiPics" resultType="THPPic">
+		select * from sys_pics;
+	</select>
+	<select id="getPics" resultType="THPPic">
+		select picId, picUrl from sys_pics;
+	</select>
+
+	<update id="updatePicContent" parameterType="THPPic">
+		update sys_pics set picContent=#{picContent} where picId=#{picId};
+	</update>
+		
+	<select id="selectByURL" parameterType="String" resultType="THPPic">
+		select * from
+		sys_pics where picUrl = #{picurl};
+	</select>
+	
+	<select id="select" parameterType="long" resultType="THPPic">
+		select * from
+		sys_pics where picId = #{picId};
+	</select>
+
+	<insert id="insert" parameterType="THPPic" useGeneratedKeys="true" keyProperty="picId" >
+		insert into sys_pics (picId, picName, picUrl, picContent)
+		values (#{picId},#{picName}, #{picUrl}, #{picContent});
+	</insert>
+
+	<update id="update" parameterType="THPPic">
+		update sys_pics set picName=#{picName},picUrl=#{picUrl}, picContent=#{picContent} where picId=#{picId};
+	</update>
+		
+	<delete  id="delete" parameterType="long">
+		delete from sys_pics where
+		picId = #{picId};
+	</delete >
+
+</mapper>

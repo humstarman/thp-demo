@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thpower.scada.mapper.THPRTTemplateMapper">
+	
+	<select id="getAllTemplates" resultType="THPRTTemplate">
+		select * from sys_rttemplates;
+	</select>
+
+	<select id="getTemplateByProId" parameterType="long" resultType="THPRTTemplate">
+		select * from sys_rttemplates 
+		where proId = #{proId};
+	</select>
+	
+	<select id="select" parameterType="long" resultType="THPRTTemplate">
+		select * from sys_rttemplates 
+		where templateId = #{templateId};
+	</select>
+	
+	<insert id="insert" parameterType="THPRTTemplate"  useGeneratedKeys="true" keyProperty="templateId" >
+	     insert into sys_rttemplates (proId, templateKey,  templateType,  templateName, templateStats, templateStartTime, templateEndTime, templateContent, templateCreateTime) 
+	     values (#{proId}, #{templateKey},  #{templateType},  #{templateName}, #{templateStats}, #{templateStartTime}, #{templateEndTime}, #{templateContent}, #{templateCreateTime});
+    </insert>
+    
+    <update id="update" parameterType="THPRTTemplate">
+            update sys_rttemplates 
+            set proId=#{proId}, templateKey=#{templateKey},  templateType=#{templateType},  templateName=#{templateName}, templateStats=#{templateStats}, templateStartTime=#{templateStartTime}, templateEndTime=#{templateEndTime}, templateContent=#{templateContent}, templateCreateTime=#{templateCreateTime}
+            where templateId=#{templateId};
+    </update>    
+    
+	<delete  id="delete" parameterType="long">
+		delete from sys_rttemplates 
+		where templateId=#{templateId};
+	</delete >
+            
+</mapper>

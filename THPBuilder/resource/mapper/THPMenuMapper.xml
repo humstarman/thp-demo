@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thpower.scada.mapper.THPMenuMapper">
+
+	<select id="getMenusByProId" parameterType="long" resultType="THPMenu">
+		select * from sys_menus where menuProId = #{menuProId} order by menuIndex ;
+	</select>
+
+	<update id="updateMenuContent" parameterType="THPMenu">
+		update sys_menus set menuContent=#{menuContent}, menuModifyTime=#{menuModifyTime} where menuId=#{menuId};
+	</update>
+	
+	<select id="validateMenuName" parameterType="String" resultType="THPMenu">
+		select * from
+		sys_menus where menuName = #{menuName};
+	</select>
+	
+	<select id="select" parameterType="long" resultType="THPMenu">
+		select * from
+		sys_menus where menuId = #{menuId};
+	</select>
+
+	<insert id="insert" parameterType="THPMenu" useGeneratedKeys="true" keyProperty="menuId" >
+		insert into sys_menus (menuParentId, menuProId, menuName, menuType, menuIndex, menuIsFolder, menuIsVisable, menuIsEnable,  menuIsDelete, menuPath, menuContent, menuNote, menuCreateTime, menuModifyTime)
+		values (#{menuParentId}, #{menuProId}, #{menuName},#{menuType}, #{menuIndex}, #{menuIsFolder}, #{menuIsVisable}, #{menuIsEnable},  #{menuIsDelete},#{menuPath}, #{menuContent}, #{menuNote}, #{menuCreateTime}, #{menuModifyTime});
+	</insert>
+
+	<update id="update" parameterType="THPMenu">
+		update sys_menus set menuParentId=#{menuParentId}, menuProId=#{menuProId},
+		menuName=#{menuName}, menuType=#{menuType}, menuIndex=#{menuIndex},
+		menuIsFolder=#{menuIsFolder}, menuIsVisable=#{menuIsVisable}, menuIsEnable=#{menuIsEnable},menuIsDelete=#{menuIsDelete},
+		menuPath=#{menuPath}, menuContent=#{menuContent}, menuNote=#{menuNote}, menuCreateTime=#{menuCreateTime}, menuModifyTime=#{menuModifyTime} where menuId=#{menuId};
+	</update>
+		
+	<delete  id="delete" parameterType="long">
+		delete from sys_menus where
+		menuId = #{menuId};
+	</delete >
+
+</mapper>
